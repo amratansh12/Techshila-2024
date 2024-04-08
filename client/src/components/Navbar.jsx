@@ -1,9 +1,14 @@
 import React from "react";
 import logo from "../images/health.svg";
 import { AlignRight } from "lucide-react";
+import { useSidebar } from "../store/toggle-sidebar";
 
 const Navbar = () => {
-  const handleToggle = () => {};
+  const { isOpen, toggleIsOpen } = useSidebar((state) => state);
+  const handleToggle = () => {
+    toggleIsOpen(!isOpen);
+  };
+
   return (
     <div className="bg-soft-black p-3 md:px-6 flex justify-between items-center relative">
       <div className="flex items-center gap-2">

@@ -7,4 +7,8 @@ body,
 :root {
   height: 100%;
   font-family: "Ubuntu", sans-serif;
+  background-image: url("./images/cool-background.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
