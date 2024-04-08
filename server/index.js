@@ -1,15 +1,19 @@
-require("dotenv").config();
-const express = require("express");
-const { createServer } = require("http");
+const dotenv = require('dotenv')
+const app = require('./app');
+const mongoose = require('mongoose');
 
-const app = express();
-const server = createServer(app);
+dotenv.config();
 
-app.get("/", (req, res) => {
-  res.send("<h1>Hello</h1>");
-});
+var PORT = process.env.PORT || 4000;
+var connString = process.env.CONNECTION_STRING || "mongodb://localhost:27017"
 
-const PORT = process.env.PORT;
-server.listen(PORT, () => {
-  console.log(`Server is running on port:-- ${PORT}`);
-});
+mongoose.connect(connString , {
+  useNewUrlParser: true, useUnifiedTopology: true
+}).then(() => {
+  console.log('Database Connected')
+}).catch(err => console.log(err))
+
+
+app.listen(PORT, () => {
+  console.log('Server Started on Port', PORT);
+})
