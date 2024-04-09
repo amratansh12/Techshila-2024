@@ -1,13 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+
 import logo from "../images/health.svg";
-import { AlignRight } from "lucide-react";
-import { useSidebar } from "../store/toggle-sidebar";
+
+import { useNavigate, useLocation } from "react-router-dom";
+import { Home, User } from "lucide-react";
 
 const Navbar = () => {
-  const { isOpen, toggleIsOpen } = useSidebar((state) => state);
-  const handleToggle = () => {
-    toggleIsOpen(!isOpen);
-  };
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+
+  useEffect(() => {
+    if (location.pathname.includes("/u/1")) {
+      setIsProfileOpen(true);
+    }
+  }, [location]);
 
   return (
     <div className="bg-soft-black p-3 md:px-6 flex justify-between items-center relative">
@@ -21,29 +28,34 @@ const Navbar = () => {
         </div>
         <p className="text-light-gray font-bold text-xl">MedFlow</p>
       </div>
-      <div className="hidden md:flex justify-center items-center gap-2 md:gap-6 list-none text-md">
-        <li className="text-light-gray cursor-pointer hover:bg-dark-gray px-1 rounded-md">
-          Dashboard
-        </li>
-        <li className="text-light-gray cursor-pointer hover:bg-dark-gray px-1 rounded-md">
-          Inventory
-        </li>
-        <li className="text-light-gray cursor-pointer hover:bg-dark-gray px-1 rounded-md">
-          Workers
-        </li>
-        <li className="text-light-gray cursor-pointer hover:bg-dark-gray px-1 rounded-md">
-          Orders
-        </li>
-        <li className="text-light-gray cursor-pointer hover:bg-dark-gray px-1 rounded-md">
-          Analytics
-        </li>
-      </div>
-      <div className="hover:bg-dark-gray p-2 rounded-full md:hidden relative">
-        <AlignRight
-          onClick={handleToggle}
-          className="h-5 w-5 cursor-pointer text-light-gray"
-        />
-      </div>
+
+      {localStorage.getItem("token") &&
+        localStorage.getItem("token") !== null && (
+          <div className="flex gap-4 items-center justify-center">
+            {!isProfileOpen ? (
+              <div
+                onClick={() => navigate(`/u/${1}`)}
+                className="flex gap-1 hover:bg-dark-gray p-2 rounded-full cursor-pointer"
+              >
+                <User className="h-5 w-5 text-light-gray" />
+                <p className="hidden md:block text-sm text-light-gray">
+                  Profile
+                </p>
+              </div>
+            ) : (
+              <div
+                onClick={() => {
+                  navigate("/");
+                  setIsProfileOpen(false);
+                }}
+                className="flex gap-1 hover:bg-dark-gray p-2 rounded-full cursor-pointer"
+              >
+                <Home className="h-5 w-5 text-light-gray" />
+                <p className="hidden md:block text-sm text-light-gray">Home</p>
+              </div>
+            )}
+          </div>
+        )}
     </div>
   );
 };
