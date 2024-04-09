@@ -27,11 +27,11 @@ const Dashboard = () => {
         </p>
         <p className="text-light-gray my-2 text-xl">
           <span className="font-bold mr-1 text-cyan-600">Role:</span>
-          <span className="text-rose-500">{role}</span>
+          <span>{role}</span>
         </p>
         <p className="text-light-gray my-2 text-xl">
           <span className="font-bold mr-1 text-cyan-600">Contact Number:</span>
-          <span className="text-rose-500">{contactNumber}</span>
+          <span>{contactNumber}</span>
         </p>
       </div>
       <div className="mt-4">

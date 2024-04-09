@@ -12,6 +12,11 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import { useUser } from "../store/user-info";
 import Dashboard from "./Dashboard";
+import Workers from "./Workers";
+import Inventory from "./Inventory";
+import Orders from "./Orders";
+import OrderStatus from "./OrderStatus";
+import NearestStores from "./NearestStores";
 
 const sidebarOptions = [
   {
@@ -57,13 +62,16 @@ const Profile = () => {
   useEffect(() => {
     if (localStorage.getItem("token") && localStorage.getItem("token")) {
       const token = localStorage.getItem("token");
-      const user = jwtDecode(token);
-      setUser(user);
 
-      const filteredOptions = sidebarOptions.filter(
-        (item) => item.type === user.role
-      );
-      setOptions(filteredOptions[0].list);
+      if (token && token !== null) {
+        const data = jwtDecode(token);
+        console.log(data);
+        setUser(data);
+        const filteredOptions = sidebarOptions.filter(
+          (item) => item.type === data.role
+        );
+        setOptions(filteredOptions[0].list);
+      }
     }
   }, [setUser]);
 
@@ -73,15 +81,43 @@ const Profile = () => {
   }, [location, component]);
 
   const listComponent = () => {
-    switch (component) {
-      case "Dashboard":
-        return <Dashboard />;
-      case "Workers":
-        return <h1 className="text-light-gray font-bold text-xl">Workers</h1>;
-      case "Inventory":
-        return <h1 className="text-light-gray font-bold text-xl">Inventory</h1>;
-      default:
-        return;
+    if (user.role === "CEO") {
+      switch (component) {
+        case "Dashboard":
+          return <Dashboard />;
+        case "Workers":
+          return <Workers />;
+        case "Inventory":
+          return <Inventory />;
+        default:
+          return;
+      }
+    }
+
+    if (user.role === "User") {
+      switch (component) {
+        case "Dashboard":
+          return <Dashboard />;
+        case "Orders":
+          return <Orders />;
+        case "Order%20Status":
+          return <OrderStatus />;
+        case "Neares%20stores":
+          return <NearestStores />;
+        default:
+          return;
+      }
+    }
+
+    if (user.role === "Store Manager") {
+      switch (component) {
+        case "Dashboard":
+          return <Dashboard />;
+        case "Workers":
+          return <Workers />;
+        default:
+          return;
+      }
     }
   };
 
