@@ -89,17 +89,17 @@ exports.login = async (req, res) => {
 
 exports.protect = async (req, res, next) => {
   let token;
-  if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
+  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
     token = req.headers.authorization.split(' ')[1];
   }
-  if(!token){
-    return res.status(401).json({message: "Unauthorized. Please login to get access"});
+  if (!token) {
+    return res.status(401).json({ message: "Unauthorized. Please login to get access" });
   }
   const decoded = await promisify(jwt.verify)(token, privateKey);
-  
-  const currentUser = await user.findOne({email: decoded.email});
-  if(!currentUser){
-    return res.status(401).json({message: "User does not exist"});
+
+  const currentUser = await user.findOne({ email: decoded.email });
+  if (!currentUser) {
+    return res.status(401).json({ message: "User does not exist" });
   }
   req.user = currentUser;
   next();
@@ -107,21 +107,49 @@ exports.protect = async (req, res, next) => {
 
 exports.restrictTo = (...roles) => {
   return (req, res, next) => {
-    if(!roles.includes(req.user.role)){
-      return res.status(403).json({message: "You do not have permission to perform this action"});
+    if (!roles.includes(req.user.role)) {
+      return res.status(403).json({ message: "You do not have permission to perform this action" });
     }
     next();
   }
 };
 
-
 exports.getAllUsers = async (req, res) => {
   const users = await user.find();
 
   res.status(200).json({
-      status: "success",
-      data: {
-          users,
-      },
+    status: "success",
+    data: {
+      users,
+    },
   });
+};
+
+exports.updateUser = async (req, res) => {
+  try {
+    const id = req.params.id;
+    await user.findByIdAndUpdate(id
+      , req.body
+    );
+    res.status(200).json({
+      status: "Updated Successfully",
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: 'fail',
+      message: err,
+    })
+  }
+};
+
+exports.deleteUser = async (req, res) => {
+  try {
+    const id = req.params.id;
+    await user.findByIdAndDelete(id);
+    res.status(200).json({
+      status: "Deleted Successfully",
+    });
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
 };
