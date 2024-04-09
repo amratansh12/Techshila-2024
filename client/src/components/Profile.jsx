@@ -11,6 +11,7 @@ import {
 import { useNavigate, useLocation } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import { useUser } from "../store/user-info";
+import Dashboard from "./Dashboard";
 
 const sidebarOptions = [
   {
@@ -74,7 +75,7 @@ const Profile = () => {
   const listComponent = () => {
     switch (component) {
       case "Dashboard":
-        return <h1 className="text-light-gray font-bold text-xl">Dashboard</h1>;
+        return <Dashboard />;
       case "Workers":
         return <h1 className="text-light-gray font-bold text-xl">Workers</h1>;
       case "Inventory":
@@ -109,7 +110,7 @@ const Profile = () => {
           <p className="text-rose-500 text-md hidden md:block">Logout</p>
         </div>
       </div>
-      <div className="p-2">{listComponent()}</div>
+      <div className="p-2 w-full h-full">{listComponent()}</div>
     </div>
   );
 };
