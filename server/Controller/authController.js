@@ -46,6 +46,7 @@ exports.signup = async (req, res) => {
           email: newUser.email,
           role: newUser.role,
           id: newUser._id,
+          contactNumber: newUser.contactNumber,
         };
         const token = jwtEncode(payload);
         res.json({ message: "User created successfully", token });
@@ -78,6 +79,7 @@ exports.login = async (req, res) => {
           email: userExists.email,
           role: userExists.role,
           id: userExists._id,
+          contactNumber: userExists.contactNumber,
         };
         const token = jwtEncode(payload);
         res.status(200).json({ message: "Login Successful", token });
