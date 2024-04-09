@@ -43,11 +43,10 @@ const sidebarOptions = [
 
 const Profile = () => {
   const location = useLocation();
-
-  console.log(location.pathname);
   const navigate = useNavigate();
   const [options, setOptions] = useState([]);
   const { user, setUser } = useUser((state) => state);
+  const [component, setComponent] = useState("");
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -59,6 +58,7 @@ const Profile = () => {
       const token = localStorage.getItem("token");
       const user = jwtDecode(token);
       setUser(user);
+
       const filteredOptions = sidebarOptions.filter(
         (item) => item.type === user.role
       );
@@ -66,15 +66,33 @@ const Profile = () => {
     }
   }, [setUser]);
 
+  useEffect(() => {
+    setComponent(location.pathname.split("/")[3]);
+    console.log(component);
+  }, [location, component]);
+
+  const listComponent = () => {
+    switch (component) {
+      case "Dashboard":
+        return <h1 className="text-light-gray font-bold text-xl">Dashboard</h1>;
+      case "Workers":
+        return <h1 className="text-light-gray font-bold text-xl">Workers</h1>;
+      case "Inventory":
+        return <h1 className="text-light-gray font-bold text-xl">Inventory</h1>;
+      default:
+        return;
+    }
+  };
+
   return (
     <div className="flex-1 bg-dark-gray/50 flex">
-      <div className="bg-soft-black w-[60px] md:w-[200px] h-full text-light-gray flex flex-col justify-between">
+      <div className="bg-soft-black w-[60px] md:w-[200px] h-full text-light-gray flex flex-col justify-between border-t border-dark-gray">
         <div className="flex flex-col gap-4 mt-4 w-full">
           {options.map((option) => (
             <div
               key={option.label}
               onClick={() => navigate(`/u/${user.name}/${option.label}`)}
-              className="hover:bg-dark-gray cursor-pointer flex gap-1 items-center justify-center md:justify-start px-3 py-2 w-full "
+              className="hover:bg-dark-gray cursor-pointer flex gap-1 items-center justify-center md:justify-start px-3 py-2 w-full"
             >
               {option.Icon}
               <p className="text-light-gray text-md hidden md:block">
@@ -91,7 +109,7 @@ const Profile = () => {
           <p className="text-rose-500 text-md hidden md:block">Logout</p>
         </div>
       </div>
-      <div className="p-2"></div>
+      <div className="p-2">{listComponent()}</div>
     </div>
   );
 };
