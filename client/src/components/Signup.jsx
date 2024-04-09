@@ -4,23 +4,47 @@ import { Link, useNavigate } from "react-router-dom";
 const Signup = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [contactNumber, setContactNumber] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [role, setRole] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(name, email, password, confirmPassword);
-    setName("");
-    setEmail("");
-    setPassword("");
-    setConfirmPassword("");
 
-    if (password !== confirmPassword) {
-      return window.alert("Enter matching passwords");
+    if (role === "Select") {
+      window.alert("Select a valid role");
     }
+    try {
+      const response = await fetch("http://localhost:8000/api/v1/auth/signup", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+          contactNumber,
+          role,
+        }),
+      });
 
-    navigate("/home");
+      const data = await response.json();
+
+      if (!data) {
+        return window.alert("Unable to create an account");
+      }
+
+      localStorage.setItem("token", data.token);
+
+      setName("");
+      setEmail("");
+      setPassword("");
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -49,19 +73,32 @@ const Signup = () => {
             className="bg-light-gray text-soft-black focus:ring-0 focus:outline-0 px-2 py-1 rounded-sm placeholder:text-mid-gray placeholder:text-sm"
           />
           <input
+            type="text"
+            value={contactNumber}
+            onChange={(e) => setContactNumber(e.target.value)}
+            placeholder="Contact Number"
+            className="bg-light-gray text-soft-black focus:ring-0 focus:outline-0 px-2 py-1 rounded-sm placeholder:text-mid-gray placeholder:text-sm"
+          />
+          <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
             className="bg-light-gray text-soft-black focus:ring-0 focus:outline-0 px-2 py-1 rounded-sm placeholder:text-mid-gray placeholder:text-sm"
           />
-          <input
-            type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            placeholder="Confirm Password"
-            className="bg-light-gray text-soft-black focus:ring-0 focus:outline-0 px-2 py-1 rounded-sm placeholder:text-mid-gray placeholder:text-sm"
-          />
+          <select
+            name="role"
+            onChange={(e) => setRole(e.target.value)}
+            placeholder="Select role"
+            className="bg-light-gray text-soft-black focus:ring-0 focus:outline-0 px-1 py-1 rounded-sm text-sm w-full"
+          >
+            <option value="Select" defaultChecked>
+              Select
+            </option>
+            <option value="CEO">CEO</option>
+            <option value="Store Manager">Store Manager</option>
+            <option value="User">User</option>
+          </select>
           <button className="bg-dark-gray hover:bg-dark-gray/80 text-light-gray px-2 py-1 rounded-sm w-full my-5">
             Signup
           </button>

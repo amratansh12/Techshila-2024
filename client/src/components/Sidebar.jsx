@@ -10,7 +10,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="bg-soft-black absolute right-0 h-full list-none space-y-2 border-l border-mid-gray">
+    <div className="bg-soft-black absolute right-0 h-full list-none space-y-2">
       <div
         className="text-light-gray top-2 right-2 hover:bg-dark-gray p-1 w-full flex gap-1 justify-center items-center cursor-pointer"
         onClick={closeSidebar}

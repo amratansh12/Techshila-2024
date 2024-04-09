@@ -4,17 +4,41 @@ import { Link, useNavigate } from "react-router-dom";
 const Login = () => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [loading, isLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(email, password);
-    setEmail("");
-    setPassword("");
-    navigate("/home");
+
+    try {
+      const response = await fetch("http://localhost:8000/api/v1/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!data) {
+        return window.alert("Unable to login");
+      }
+
+      localStorage.setItem("token", data.token);
+
+      setEmail("");
+      setPassword("");
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
-    <div className="flex-1 bg-dark-gray/50 flex items-center justify-center">
+    <div className="flex-1 bg-dark-gray/50   flex items-center justify-center">
       <div className="bg-soft-black p-6 rounded-md aspect-square border border-mid-gray">
         <p className="text-lg font-bold text-light-gray text-center my-5">
           LOGIN
