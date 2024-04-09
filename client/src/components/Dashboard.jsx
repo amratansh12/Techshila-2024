@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 const Dashboard = () => {
   const navigate = useNavigate();
   const { user } = useUser((state) => state);
-  const { name, email, role } = user;
+  const { name, email, role, contactNumber } = user;
 
   const handleClick = (target) => {
     navigate(`/u/${name}/${target}`);
@@ -28,6 +28,10 @@ const Dashboard = () => {
         <p className="text-light-gray my-2 text-xl">
           <span className="font-bold mr-1 text-cyan-600">Role:</span>
           <span className="text-rose-500">{role}</span>
+        </p>
+        <p className="text-light-gray my-2 text-xl">
+          <span className="font-bold mr-1 text-cyan-600">Contact Number:</span>
+          <span className="text-rose-500">{contactNumber}</span>
         </p>
       </div>
       <div className="mt-4">
