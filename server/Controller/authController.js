@@ -11,6 +11,7 @@ const jwtEncode = (payload) => {
   const token = jwt.sign(payload, privateKey);
   return token;
 };
+
 exports.signup = async (req, res) => {
   try {
     // Extract email and password from the req.body object
@@ -44,6 +45,7 @@ exports.signup = async (req, res) => {
           name: newUser.name,
           email: newUser.email,
           role: newUser.role,
+          id: newUser._id,
         };
         const token = jwtEncode(payload);
         res.json({ message: "User created successfully", token });
@@ -75,6 +77,7 @@ exports.login = async (req, res) => {
           name: userExists.name,
           email: userExists.email,
           role: userExists.role,
+          id: userExists._id,
         };
         const token = jwtEncode(payload);
         res.status(200).json({ message: "Login Successful", token });
@@ -89,11 +92,16 @@ exports.login = async (req, res) => {
 
 exports.protect = async (req, res, next) => {
   let token;
-  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
-    token = req.headers.authorization.split(' ')[1];
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer")
+  ) {
+    token = req.headers.authorization.split(" ")[1];
   }
   if (!token) {
-    return res.status(401).json({ message: "Unauthorized. Please login to get access" });
+    return res
+      .status(401)
+      .json({ message: "Unauthorized. Please login to get access" });
   }
   const decoded = await promisify(jwt.verify)(token, privateKey);
 
@@ -108,10 +116,12 @@ exports.protect = async (req, res, next) => {
 exports.restrictTo = (...roles) => {
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {
-      return res.status(403).json({ message: "You do not have permission to perform this action" });
+      return res
+        .status(403)
+        .json({ message: "You do not have permission to perform this action" });
     }
     next();
-  }
+  };
 };
 
 exports.getAllUsers = async (req, res) => {
@@ -128,17 +138,15 @@ exports.getAllUsers = async (req, res) => {
 exports.updateUser = async (req, res) => {
   try {
     const id = req.params.id;
-    await user.findByIdAndUpdate(id
-      , req.body
-    );
+    await user.findByIdAndUpdate(id, req.body);
     res.status(200).json({
       status: "Updated Successfully",
     });
   } catch (error) {
     res.status(500).json({
-      status: 'fail',
-      message: err,
-    })
+      status: "fail",
+      message: error,
+    });
   }
 };
 

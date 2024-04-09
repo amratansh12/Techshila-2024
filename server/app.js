@@ -1,10 +1,12 @@
 const express = require("express");
+const cors = require("cors");
 const authRouter = require("./Routes/authRoutes");
 const storeRouter = require("./Routes/storeRoutes");
 
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
 app.get("/test", (req, res) => {
   res.send("Hello World");
