@@ -140,9 +140,33 @@ exports.getAllUsers = async (req, res) => {
 exports.updateUser = async (req, res) => {
   try {
     const id = req.params.id;
-    await user.findByIdAndUpdate(id, req.body);
+
+    const { name, email, contactNumber } = req.body;
+
+    if (name) {
+      await user.findByIdAndUpdate(id, { name });
+    }
+
+    if (email) {
+      await user.findByIdAndUpdate(id, { email });
+    }
+
+    if (contactNumber) {
+      await user.findByIdAndUpdate(id, { contactNumber });
+    }
+
+    const updatedUser = await user.findById(id);
+    const payload = {
+      name: updatedUser.name,
+      email: updatedUser.email,
+      role: updatedUser.role,
+      id: updatedUser._id,
+      contactNumber: updatedUser.contactNumber,
+    };
+    const token = jwtEncode(payload);
     res.status(200).json({
       status: "Updated Successfully",
+      token,
     });
   } catch (error) {
     res.status(500).json({
