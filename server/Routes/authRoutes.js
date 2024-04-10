@@ -13,12 +13,7 @@ router.get(
   restrictTo("CEO", "Store Manager"),
   authController.getAllUsers
 );
-router.post(
-  "/updateUser/:id",
-  protect,
-  restrictTo("CEO"),
-  authController.updateUser
-);
+router.post("/updateUser/:id", protect, authController.updateUser);
 router.delete(
   "/deleteUser/:id",
   protect,
