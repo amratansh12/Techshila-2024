@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { useAddItemModal } from "../store/toggle-modal";
 
 const Inventory = () => {
+  const { toggleIsAddItemOpen } = useAddItemModal((state) => state);
   const [inventory, setInventory] = useState([]);
 
   useEffect(() => {
@@ -26,7 +28,6 @@ const Inventory = () => {
         }
 
         setInventory(inventories.data);
-        console.log(inventory);
       } catch (err) {
         console.log(err);
       }
@@ -39,11 +40,19 @@ const Inventory = () => {
       <p className="text-2xl text-light-gray py-2 border-b border-light-gray font-bold">
         Inventory
       </p>
-      {!inventory.length > 0 && (
+      {!inventory && (
         <div className="w-full flex-1 text-lg flex justify-center items-center text-light-gray">
           Your inventory is empty
         </div>
       )}
+      <div className="py-2 border-t border-light-gray">
+        <button
+          onClick={toggleIsAddItemOpen}
+          className="bg-soft-black hover:bg-soft-black/60 px-2 py-1 rounded-md text-light-gray font-bold"
+        >
+          Add Item
+        </button>
+      </div>
     </div>
   );
 };

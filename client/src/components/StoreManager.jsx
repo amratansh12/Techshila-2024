@@ -1,13 +1,14 @@
 import React from "react";
-import { useUser } from "../store/user-info";
+import JoinStore from "./JoinStore";
 
 const StoreManager = () => {
   return (
-    <div className="bg-soft-black p-6 w-auto rounded-lg border border-mid-gray flex justify-center items-center">
-      <p className="text-lg text-light-gray font-bold text-center my-4">
+    <div className="bg-soft-black rounded-lg border border-mid-gray flex flex-col justify-center items-center p-4">
+      <p className="text-cyan-600 text-center">
         Please check your profile to accesss information about your workers and
         inventory
       </p>
+      <JoinStore />
     </div>
   );
 };
