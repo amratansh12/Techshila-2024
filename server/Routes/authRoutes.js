@@ -14,11 +14,6 @@ router.get(
   authController.getAllUsers
 );
 router.post("/updateUser/:id", protect, authController.updateUser);
-router.delete(
-  "/deleteUser/:id",
-  protect,
-  restrictTo("CEO"),
-  authController.deleteUser
-);
+router.delete("/deleteUser/:id", protect, authController.deleteUser);
 
 module.exports = router;
