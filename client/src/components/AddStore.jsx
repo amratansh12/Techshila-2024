@@ -61,6 +61,7 @@ const AddStore = () => {
 
   const handleLocationSelected = async (latlng) => {
     console.log(latlng); // { lat: 51.505, lng: -0.09 }
+    setLocation(`lat:${latlng.lat}; long:${latlng.lng}`);
     // setCoord(latlng);
     coord = latlng;
     // Send the latlng to the backend
@@ -114,8 +115,8 @@ const AddStore = () => {
             Add Store
           </button>
         </form>
-        <div className="w-full">
-          <h3 className="text-white">Select Store location</h3>
+        <div className="w-full py-4">
+          <p className="text-light-gray">Select Store location</p>
           <LocationSelectorMap onLocationSelected={handleLocationSelected} />
         </div>
       </div>
