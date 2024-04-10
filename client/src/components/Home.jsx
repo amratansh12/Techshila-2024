@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useUser } from "../store/user-info";
 import { jwtDecode } from "jwt-decode";
+import StoreManager from "./StoreManager";
 
 const Home = () => {
   const [userRole, setUserRole] = useState("");
@@ -25,14 +26,7 @@ const Home = () => {
           </p>
         </div>
       )}
-      {userRole === "Store Manager" && (
-        <div className="bg-soft-black p-6 w-auto rounded-lg border border-mid-gray flex justify-center items-center">
-          <p className="text-xl text-light-gray font-bold text-center my-4">
-            Please check your profile to accesss information about your workers
-            and inventory
-          </p>
-        </div>
-      )}
+      {userRole === "Store Manager" && <StoreManager />}
       {userRole === "User" && (
         <div className="bg-soft-black p-6 rounded-md aspect-square border border-mid-gray">
           <p className="text-xl text-light-gray font-bold text-center my-4">
