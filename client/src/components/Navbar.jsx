@@ -4,14 +4,16 @@ import logo from "../images/health.svg";
 
 import { useNavigate, useLocation } from "react-router-dom";
 import { Home, User } from "lucide-react";
+import { useUser } from "../store/user-info";
 
 const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { user } = useUser((state) => state);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
 
   useEffect(() => {
-    if (location.pathname.includes("/u/1")) {
+    if (location.pathname.includes(`/u/${user.name}`)) {
       setIsProfileOpen(true);
     }
   }, [location]);
@@ -34,7 +36,7 @@ const Navbar = () => {
           <div className="flex gap-4 items-center justify-center">
             {!isProfileOpen ? (
               <div
-                onClick={() => navigate(`/u/${1}`)}
+                onClick={() => navigate(`/u/${user.name}`)}
                 className="flex gap-1 hover:bg-dark-gray p-2 rounded-full cursor-pointer"
               >
                 <User className="h-5 w-5 text-light-gray" />

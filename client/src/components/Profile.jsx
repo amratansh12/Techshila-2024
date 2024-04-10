@@ -7,6 +7,7 @@ import {
   LineChart,
   LocateFixed,
   LogOut,
+  UserRoundCog,
 } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
@@ -17,6 +18,7 @@ import Inventory from "./Inventory";
 import Orders from "./Orders";
 import OrderStatus from "./OrderStatus";
 import NearestStores from "./NearestStores";
+import UpdateProfile from "./UpdateProfile";
 
 const sidebarOptions = [
   {
@@ -65,7 +67,6 @@ const Profile = () => {
 
       if (token && token !== null) {
         const data = jwtDecode(token);
-        console.log(data);
         setUser(data);
         const filteredOptions = sidebarOptions.filter(
           (item) => item.type === data.role
@@ -77,7 +78,6 @@ const Profile = () => {
 
   useEffect(() => {
     setComponent(location.pathname.split("/")[3]);
-    console.log(component);
   }, [location, component]);
 
   const listComponent = () => {
@@ -89,6 +89,8 @@ const Profile = () => {
           return <Workers />;
         case "Inventory":
           return <Inventory />;
+        case "settings":
+          return <UpdateProfile />;
         default:
           return;
       }
@@ -102,8 +104,10 @@ const Profile = () => {
           return <Orders />;
         case "Order%20Status":
           return <OrderStatus />;
-        case "Neares%20stores":
+        case "Nearest%20stores":
           return <NearestStores />;
+        case "settings":
+          return <UpdateProfile />;
         default:
           return;
       }
@@ -113,8 +117,14 @@ const Profile = () => {
       switch (component) {
         case "Dashboard":
           return <Dashboard />;
-        case "Workers":
-          return <Workers />;
+        case "Inventory":
+          return <Inventory />;
+        case "Orders":
+          return <Orders />;
+        case "Order%20Status":
+          return <OrderStatus />;
+        case "settings":
+          return <UpdateProfile />;
         default:
           return;
       }
@@ -138,15 +148,24 @@ const Profile = () => {
             </div>
           ))}
         </div>
-        <div
-          onClick={handleLogout}
-          className="hover:bg-dark-gray cursor-pointer flex gap-1 items-center justify-center md:justify-start px-3 py-2 border-t border-mid-gray w-full"
-        >
-          <LogOut className="h-5 w-5 text-rose-500" />
-          <p className="text-rose-500 text-md hidden md:block">Logout</p>
+        <div>
+          <div
+            onClick={() => navigate(`/u/${user.name}/settings`)}
+            className="hover:bg-dark-gray cursor-pointer flex gap-1 items-center justify-center md:justify-start px-3 py-2 border-t border-mid-gray w-full"
+          >
+            <UserRoundCog className="h-5 w-5 text-cyan-500" />
+            <p className="text-cyan-500 text-md hidden md:block">Account</p>
+          </div>
+          <div
+            onClick={handleLogout}
+            className="hover:bg-dark-gray cursor-pointer flex gap-1 items-center justify-center md:justify-start px-3 py-2 border-t border-mid-gray w-full"
+          >
+            <LogOut className="h-5 w-5 text-rose-500" />
+            <p className="text-rose-500 text-md hidden md:block">Logout</p>
+          </div>
         </div>
       </div>
-      <div className="p-2 w-full h-full">{listComponent()}</div>
+      <div className="px-4 py-2 w-full h-full">{listComponent()}</div>
     </div>
   );
 };

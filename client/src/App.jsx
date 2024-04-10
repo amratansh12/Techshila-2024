@@ -1,13 +1,16 @@
+import { useEffect } from "react";
 import "./App.css";
+import { jwtDecode } from "jwt-decode";
 
 import Navbar from "./components/Navbar";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Home from "./components/Home";
+import Profile from "./components/Profile";
 
 import { Routes, Route } from "react-router-dom";
-import Profile from "./components/Profile";
+import { useUser } from "./store/user-info";
 
 function App() {
   return (
