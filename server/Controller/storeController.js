@@ -18,15 +18,26 @@ exports.getAllStores = async (req, res) => {
 };
 
 exports.addStore = async (req, res) => {
-  try {
-    const newStore = await store.create(req.body);
+try {
+    const { name, location: address, coord } = req.body;
+    const locationData = {
+        type: "Point",
+        coordinates: [coord.lng, coord.lat],
+    }
+    const data ={
+        name,
+        address,
+        location : locationData,
+    }
+    const newStore = await store.create(data);
     res.status(201).json({
-      status: "success",
-      data: {
-        store: newStore,
-      },
+        status: "success",
+        data: {
+            store: newStore,
+        },
     });
-  } catch (err) {
+} catch (err) {
+    console.log(err);
     res.status(400).json({
       status: "fail",
       message: err,

@@ -8,6 +8,7 @@ import {
   LocateFixed,
   LogOut,
   UserRoundCog,
+  StoreIcon,
 } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
@@ -19,6 +20,7 @@ import Orders from "./Orders";
 import OrderStatus from "./OrderStatus";
 import NearestStores from "./NearestStores";
 import UpdateProfile from "./UpdateProfile";
+import AddStore from "./AddStore";
 
 const sidebarOptions = [
   {
@@ -27,6 +29,7 @@ const sidebarOptions = [
       { label: "Dashboard", Icon: <SquareMenu className="h-4 w-4" /> },
       { label: "Workers", Icon: <UsersRound className="h-4 w-4" /> },
       { label: "Inventory", Icon: <ShoppingCart className="h-4 w-4" /> },
+      { label: "Add Store", Icon: <StoreIcon className="h-4 w-4" /> },
     ],
   },
   {
@@ -89,6 +92,8 @@ const Profile = () => {
           return <Workers />;
         case "Inventory":
           return <Inventory />;
+        case "Add%20Store":
+          return <AddStore />;
         case "settings":
           return <UpdateProfile />;
         default:
