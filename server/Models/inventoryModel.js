@@ -10,6 +10,17 @@ const inventorySchema = new mongoose.Schema({
     type: String,
     required: [true, "Description is required"],
   },
+  type: {
+    type: String,
+    required: [true, "Type is required"],
+  },
+  manufacturer: {
+    type: String,
+    required: [true, "Manufacturer is required"],
+  },
+  unit: {
+    type: String,
+  },
   quantity: {
     type: Number,
     required: [true, "Quantity is required"],

@@ -20,14 +20,13 @@ const Inventory = () => {
         );
 
         const inventories = await response.json();
-
         if (!inventories) {
           return window.alert(
             "Unable to fetch inventories, Internal servor error"
           );
         }
 
-        setInventory(inventories.data);
+        setInventory(inventories.data.inventories);
       } catch (err) {
         console.log(err);
       }
