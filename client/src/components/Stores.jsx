@@ -9,7 +9,7 @@ const ViewStore = () => {
             try {
                 const token = localStorage.getItem("token");
                 const response = await fetch(
-                    `http://localhost:4000/api/v1/store/getStores`,
+                    `http://localhost:8000/api/v1/store/getStores`,
                     {
                         method: "GET",
                         headers: {
