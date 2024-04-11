@@ -11,7 +11,7 @@ const AddItemModal = () => {
   };
 
   return (
-    <div className="w-full h-screen bg-black/50 absolute flex justify-center items-center">
+    <div className="w-full h-screen bg-black/70 absolute flex justify-center items-center">
       <div className="bg-mid-gray border border-soft-black rounded-lg relative">
         <button
           onClick={toggleIsAddItemOpen}

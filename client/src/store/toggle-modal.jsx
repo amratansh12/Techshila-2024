@@ -5,3 +5,9 @@ export const useAddItemModal = create((set) => ({
   toggleIsAddItemOpen: () =>
     set((state) => ({ isAddItemOpen: !state.isAddItemOpen })),
 }));
+
+export const useDeleteAccountModal = create((set) => ({
+  isDeleteAccountOpen: false,
+  toggleIsDeleteOpen: () =>
+    set((state) => ({ isDeleteAccountOpen: !state.isDeleteAccountOpen })),
+}));

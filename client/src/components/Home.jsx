@@ -23,7 +23,6 @@ const Home = () => {
       {userRole === "User" && (
         <div className="bg-soft-black p-6 rounded-md aspect-square border border-mid-gray">
           <p className="text-xl text-light-gray font-bold text-center my-4">
-            {userRole}
             Search your Meds
           </p>
           <input

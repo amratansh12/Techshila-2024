@@ -10,11 +10,13 @@ import Home from "./components/Home";
 import Profile from "./components/Profile";
 
 import { Routes, Route } from "react-router-dom";
-import { useAddItemModal } from "./store/toggle-modal";
+import { useAddItemModal, useDeleteAccountModal } from "./store/toggle-modal";
 import AddItemModal from "./components/AddItemModal";
+import DeleteAccountModal from "./components/DeleteAccountModal";
 
 function App() {
   const { isAddItemOpen } = useAddItemModal((state) => state);
+  const { isDeleteAccountOpen } = useDeleteAccountModal((state) => state);
   return (
     <div className="flex flex-col h-screen">
       <Navbar />
@@ -39,6 +41,7 @@ function App() {
         />
       </Routes>
       {isAddItemOpen && <AddItemModal />}
+      {isDeleteAccountOpen && <DeleteAccountModal />}
     </div>
   );
 }
