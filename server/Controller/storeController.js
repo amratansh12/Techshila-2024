@@ -19,18 +19,20 @@ exports.getAllStores = async (req, res) => {
 
 exports.addStore = async (req, res) => {
   try {
-    const { name, location: address, coord } = req.body;
-    const locationData = {
-      type: "Point",
-      coordinates: [coord.lng, coord.lat],
-    };
-    const data = {
+    const { name, address, location, contactNumber } = req.body;
+
+    const newStore = await store.create({
       name,
       address,
-      location: locationData,
-    };
-    const newStore = await store.create(data);
-    res.status(201).json({
+      location,
+      contactNumber,
+    });
+
+    if (!newStore) {
+      return res.status(401).json({ error: "Internal Server erro" });
+    }
+
+    return res.status(201).json({
       status: "success",
       data: {
         store: newStore,

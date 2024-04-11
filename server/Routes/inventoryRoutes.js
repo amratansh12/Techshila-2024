@@ -11,6 +11,7 @@ router.post(
   restrictTo("CEO", "Store Manager"),
   inventoryController.addInventory
 );
+//integrated to the frontend
 router.get(
   "/getInventories",
   protect,

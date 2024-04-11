@@ -11,16 +11,12 @@ const storeSchema = new mongoose.Schema({
     required: [true, "Address is required"],
   },
   location: {
-    type: {
-      type: String,
-      enum: ["Point"],
-      required: true,
-    },
-    coordinates: {
-      // [longitude, latitude]
-      type: [Number],
-      required: true,
-    },
+    type: [Number],
+    required: [true, "Enter valid location"],
+  },
+  contactNumber: {
+    type: String,
+    required: [true, "Store contact number required"],
   },
 });
 

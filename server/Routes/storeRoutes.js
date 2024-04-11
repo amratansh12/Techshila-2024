@@ -11,6 +11,7 @@ router.post(
   restrictTo("CEO", "Store Manager"),
   storeController.addStore
 );
+//integrated to the frontend
 router.get(
   "/getStores",
   protect,
