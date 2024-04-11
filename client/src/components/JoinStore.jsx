@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { useUser } from "../store/user-info";
 
 const JoinStore = () => {
+  const { user } = useUser((state) => state);
   const [storeId, setStoreId] = useState("");
   const [allStores, setAllStores] = useState([]);
 
@@ -18,13 +20,12 @@ const JoinStore = () => {
           }
         );
 
-        const stores = await response.json();
+        const result = await response.json();
 
-        if (!stores) {
+        if (!result) {
           return console.log("Unable to process store info");
         }
-
-        setAllStores(stores.data);
+        setAllStores(result.data.stores);
       } catch (error) {
         console.log(error);
       }
@@ -33,12 +34,32 @@ const JoinStore = () => {
     getStores();
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (storeId) {
-      console.log("STORE ID:--", storeId);
+    const token = localStorage.getItem("token");
+    const response = await fetch(
+      `http://localhost:8000/api/v1/store/updateStore/${storeId}`,
+      {
+        method: "POST",
+        headers: {
+          authorization: `Bearer ${token}`,
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify({
+          worker: user.id,
+        }),
+      }
+    );
+
+    const result = await response.json();
+
+    if (!result) {
+      return window.alert("Internal server error, Unable to join store");
     }
+
+    console.log(result);
+    window.alert("Store joined");
   };
 
   return (
@@ -58,12 +79,12 @@ const JoinStore = () => {
           className="bg-light-gray text-soft-black focus:ring-0 focus:outline-0 px-1 py-1 rounded-sm text-sm w-[50%]"
         >
           <option value="Enter store id" defaultChecked>
-            Enter Store ID
+            Select a store
           </option>
           {allStores.length > 0 &&
             allStores.map((storeItem) => (
-              <option key={storeItem} value={storeItem} defaultChecked>
-                {storeItem}
+              <option key={storeItem.name} value={storeItem._id} defaultChecked>
+                {storeItem.name}
               </option>
             ))}
         </select>
