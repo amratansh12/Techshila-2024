@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import LocationSelectorMap from "../components/StoreLocation/LocationSelector";
+import LocationSelector from "./StoreLocation/StoreLocation";
 
 const ViewStore = () => {
   const [stores, setStores] = useState([]);
@@ -48,7 +48,8 @@ const ViewStore = () => {
                   <p className="text-md">Address: {store.address}</p>
                   <p className="text-md">Contact: {store.contactNumber}</p>
                   <div className="w-full aspect-square">
-                    <LocationSelectorMap
+                    {console.log(store.location)}
+                    <LocationSelector
                       onLocationSelected={() => {}}
                       DEFAULT_POSITION={store.location}
                       styles={"w-full aspect-square"}
