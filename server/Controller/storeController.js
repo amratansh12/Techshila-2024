@@ -50,16 +50,27 @@ exports.addStore = async (req, res) => {
 exports.updateStore = async (req, res) => {
   try {
     const storeId = req.params.id;
-    const updatedStore = await store.findByIdAndUpdate(storeId, {
-      ...req.body,
-    });
+
+    const { userId } = req.body;
+
+    const updatedStore = await store.findByIdAndUpdate(
+      storeId,
+      { $addToSet: { workers: userId } },
+      { new: true }
+    );
+
+    if (!updatedStore) {
+      return res.status(401).json({ error: "Internal server error" });
+    }
+
     res.status(200).json({
       status: "success",
+      updatedStore,
     });
   } catch (err) {
     res.status(500).json({
       status: "fail",
-      message: err,
+      message: err.message,
     });
   }
 };
