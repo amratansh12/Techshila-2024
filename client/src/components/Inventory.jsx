@@ -40,7 +40,7 @@ const Inventory = () => {
       <p className="text-2xl text-light-gray py-2 border-b border-light-gray font-bold">
         Inventory
       </p>
-      {!inventory && (
+      {!inventory.length > 0 && (
         <div className="w-full flex-1 text-lg flex justify-center items-center text-light-gray">
           Your inventory is empty
         </div>
