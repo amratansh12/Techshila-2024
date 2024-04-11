@@ -14,7 +14,7 @@ router.post(
 router.get(
   "/getInventories",
   protect,
-  restrictTo("Store Manager"),
+  restrictTo("User"),
   inventoryController.getAllInventories
 );
 router.post(
