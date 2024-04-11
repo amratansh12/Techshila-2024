@@ -36,7 +36,7 @@ const Workers = () => {
       <p className="text-2xl text-light-gray py-2 border-b border-light-gray font-bold">
         Workers
       </p>
-      <div className="grid grid-cols-4 gap-4 py-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 py-4">
         {workers.length > 0 &&
           workers.map((worker) => (
             <div

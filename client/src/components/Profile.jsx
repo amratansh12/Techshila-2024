@@ -9,6 +9,7 @@ import {
   LogOut,
   UserRoundCog,
   StoreIcon,
+  Plus,
 } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
@@ -30,7 +31,7 @@ const sidebarOptions = [
       { label: "Dashboard", Icon: <SquareMenu className="h-4 w-4" /> },
       { label: "Workers", Icon: <UsersRound className="h-4 w-4" /> },
       { label: "Inventory", Icon: <ShoppingCart className="h-4 w-4" /> },
-      { label: "Add Store", Icon: <StoreIcon className="h-4 w-4" /> },
+      { label: "Add Store", Icon: <Plus className="h-4 w-4" /> },
       { label: "Stores", Icon: <StoreIcon className="h-4 w-4" /> },
     ],
   },
@@ -142,7 +143,7 @@ const Profile = () => {
 
   return (
     <div className="flex-1 bg-dark-gray/50 flex">
-      <div className="bg-soft-black w-[60px] md:w-[200px] h-full text-light-gray flex flex-col justify-between border-t border-dark-gray">
+      <div className="bg-soft-black w-[60px] md:w-[200px] h-full text-light-gray flex flex-col border-t border-dark-gray">
         <div className="flex flex-col gap-4 mt-4 w-full">
           {options.map((option) => (
             <div
@@ -156,18 +157,17 @@ const Profile = () => {
               </p>
             </div>
           ))}
-        </div>
-        <div>
+
           <div
             onClick={() => navigate(`/u/${user.name}/settings`)}
-            className="hover:bg-dark-gray cursor-pointer flex gap-1 items-center justify-center md:justify-start px-3 py-2 border-t border-mid-gray w-full"
+            className="hover:bg-dark-gray cursor-pointer flex gap-1 items-center justify-center md:justify-start px-3 py-2 w-full"
           >
             <UserRoundCog className="h-5 w-5 text-cyan-500" />
             <p className="text-cyan-500 text-md hidden md:block">Account</p>
           </div>
           <div
             onClick={handleLogout}
-            className="hover:bg-dark-gray cursor-pointer flex gap-1 items-center justify-center md:justify-start px-3 py-2 border-t border-mid-gray w-full"
+            className="hover:bg-dark-gray cursor-pointer flex gap-1 items-center justify-center md:justify-start px-3 py-2 w-full"
           >
             <LogOut className="h-5 w-5 text-rose-500" />
             <p className="text-rose-500 text-md hidden md:block">Logout</p>

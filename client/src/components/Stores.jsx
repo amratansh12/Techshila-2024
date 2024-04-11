@@ -37,7 +37,7 @@ const ViewStore = () => {
             Stores
           </p>
           {stores && stores.length > 0 && (
-            <div className="grid grid-cols-4 gap-4 py-4 overflow-y-scroll hide-scrollbar">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 py-4 overflow-y-scroll hide-scrollbar">
               {stores?.map((store) => (
                 <div
                   key={store.id}
@@ -58,11 +58,11 @@ const ViewStore = () => {
                       No workers in this store
                     </div>
                   )}
-                  <div className="w-full aspect-square">
+                  <div className="w-full">
                     <LocationSelector
                       onLocationSelected={() => {}}
                       DEFAULT_POSITION={store.location}
-                      styles={"w-full aspect-square"}
+                      styles={"w-full aspect-video"}
                     />
                   </div>
                 </div>

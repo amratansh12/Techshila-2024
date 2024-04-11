@@ -36,6 +36,10 @@ const Signup = () => {
         return window.alert("Unable to create an account");
       }
 
+      if (!(data.message === "User created successfully")) {
+        return window.alert(data.message);
+      }
+
       localStorage.setItem("token", data.token);
 
       setName("");
