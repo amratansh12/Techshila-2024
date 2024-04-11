@@ -7,6 +7,7 @@ const JoinStore = () => {
   const [allStores, setAllStores] = useState([]);
 
   useEffect(() => {
+    console.log(user.id);
     const getStores = async () => {
       try {
         const token = localStorage.getItem("token");
@@ -47,14 +48,14 @@ const JoinStore = () => {
           "Content-type": "application/json",
         },
         body: JSON.stringify({
-          worker: user.id,
+          userId: user.id,
         }),
       }
     );
 
     const result = await response.json();
 
-    if (!result) {
+    if (!result || !result.status === "success") {
       return window.alert("Internal server error, Unable to join store");
     }
 
@@ -83,7 +84,7 @@ const JoinStore = () => {
           </option>
           {allStores.length > 0 &&
             allStores.map((storeItem) => (
-              <option key={storeItem.name} value={storeItem._id} defaultChecked>
+              <option key={storeItem._id} value={storeItem._id} defaultChecked>
                 {storeItem.name}
               </option>
             ))}
