@@ -10,9 +10,11 @@ import Home from "./components/Home";
 import Profile from "./components/Profile";
 
 import { Routes, Route } from "react-router-dom";
-import { useUser } from "./store/user-info";
+import { useAddItemModal } from "./store/toggle-modal";
+import AddItemModal from "./components/AddItemModal";
 
 function App() {
+  const { isAddItemOpen } = useAddItemModal((state) => state);
   return (
     <div className="flex flex-col h-screen">
       <Navbar />
@@ -36,6 +38,7 @@ function App() {
           }
         />
       </Routes>
+      {isAddItemOpen && <AddItemModal />}
     </div>
   );
 }
