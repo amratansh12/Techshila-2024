@@ -21,6 +21,7 @@ import OrderStatus from "./OrderStatus";
 import NearestStores from "./NearestStores";
 import UpdateProfile from "./UpdateProfile";
 import AddStore from "./AddStore";
+import ViewStore from "./Stores";
 
 const sidebarOptions = [
   {
@@ -30,6 +31,7 @@ const sidebarOptions = [
       { label: "Workers", Icon: <UsersRound className="h-4 w-4" /> },
       { label: "Inventory", Icon: <ShoppingCart className="h-4 w-4" /> },
       { label: "Add Store", Icon: <StoreIcon className="h-4 w-4" /> },
+      { label: "Stores", Icon: <StoreIcon className="h-4 w-4" /> },
     ],
   },
   {
@@ -94,6 +96,8 @@ const Profile = () => {
           return <Inventory />;
         case "Add%20Store":
           return <AddStore />;
+        case "Stores":
+          return <ViewStore />;
         case "settings":
           return <UpdateProfile />;
         default:

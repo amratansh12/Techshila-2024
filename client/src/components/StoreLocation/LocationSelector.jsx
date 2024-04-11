@@ -24,7 +24,6 @@ const LocationSelectorMap = ({ onLocationSelected }) => {
           lng: position.coords.longitude,
         };
         setPosition(currentPosition);
-        // Optionally, you can immediately send this location to the backend
         onLocationSelected(currentPosition);
       },
       () => {
@@ -33,7 +32,7 @@ const LocationSelectorMap = ({ onLocationSelected }) => {
         setPosition(DEFAULT_POSITION);
       }
     );
-  }, [onLocationSelected]);
+  }, []);
 
   const MapEvents = () => {
     const map = useMap();
@@ -46,8 +45,12 @@ const LocationSelectorMap = ({ onLocationSelected }) => {
 
     useMapEvents({
       click(e) {
-        setPosition(e.latlng);
-        onLocationSelected(e.latlng);
+        const newSelectedPosition = {
+          lat: e.latlng.lat,
+          lng: e.latlng.lng,
+        };
+        setPosition(newSelectedPosition); // Update position based on map click
+        onLocationSelected(newSelectedPosition); // Optionally, send new position to backend or parent component
       },
     });
 
