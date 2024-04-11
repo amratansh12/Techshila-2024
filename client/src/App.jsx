@@ -13,12 +13,24 @@ import { Routes, Route } from "react-router-dom";
 import { useAddItemModal, useDeleteAccountModal } from "./store/toggle-modal";
 import AddItemModal from "./components/AddItemModal";
 import DeleteAccountModal from "./components/DeleteAccountModal";
+import { useUser } from "./store/user-info";
 
 function App() {
+  const { setUser } = useUser((state) => state);
   const { isAddItemOpen } = useAddItemModal((state) => state);
   const { isDeleteAccountOpen } = useDeleteAccountModal((state) => state);
+  useEffect(() => {
+    if (
+      localStorage.getItem("token") &&
+      localStorage.getItem("token") !== null
+    ) {
+      const token = localStorage.getItem("token");
+      const decoded = jwtDecode(token);
+      setUser(decoded);
+    }
+  }, []);
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-screen hide-scrollbar">
       <Navbar />
       <Routes>
         <Route path="/login" element={<Login />} />

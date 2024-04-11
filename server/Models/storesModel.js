@@ -18,6 +18,9 @@ const storeSchema = new mongoose.Schema({
     type: String,
     required: [true, "Store contact number required"],
   },
+  workers: {
+    type: [mongoose.Schema.Types.ObjectId],
+  },
 });
 
 storeSchema.index({ location: "2dsphere" });

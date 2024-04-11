@@ -174,7 +174,9 @@ const Profile = () => {
           </div>
         </div>
       </div>
-      <div className="px-4 py-2 w-full h-full">{listComponent()}</div>
+      <div className="px-4 py-2 w-full h-full bg-dark-gray">
+        {listComponent()}
+      </div>
     </div>
   );
 };

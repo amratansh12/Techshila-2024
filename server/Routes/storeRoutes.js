@@ -5,6 +5,7 @@ const storeController = require("../Controller/storeController");
 const { protect } = require("../Controller/authController");
 const { restrictTo } = require("../Controller/authController");
 
+//integrated to the frontend
 router.post(
   "/createStore",
   protect,
@@ -18,6 +19,7 @@ router.get(
   restrictTo("CEO", "Store Manager"),
   storeController.getAllStores
 );
+//integrated to the frontend
 router.post(
   "/updateStore/:id",
   protect,
