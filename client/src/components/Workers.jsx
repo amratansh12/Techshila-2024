@@ -41,7 +41,7 @@ const Workers = () => {
           workers.map((worker) => (
             <div
               key={worker.id}
-              className="bg-mid-gray text-white p-2 rounded-md border border-dark-gray"
+              className="bg-mid-gray text-white p-2 rounded-md border border-dark-gray shadow-sm shadow-dark-gray"
             >
               <div className="flex items-center gap-1">
                 <span className="text-cyan-600 font-bold">Name:</span>

@@ -11,9 +11,13 @@ import L from "leaflet";
 import icon from "./icon.svg";
 
 // Define a default position in case geolocation is not available or not permitted
-const DEFAULT_POSITION = [29.854263, 77.888]; // Example: London's latitude and longitude
+// const DEFAULT_POSITION = [29.854263, 77.888]; // Example: London's latitude and longitude
 
-const LocationSelectorMap = ({ onLocationSelected }) => {
+const LocationSelectorMap = ({
+  onLocationSelected,
+  DEFAULT_POSITION,
+  styles,
+}) => {
   const [position, setPosition] = useState(null);
 
   useEffect(() => {
@@ -74,7 +78,7 @@ const LocationSelectorMap = ({ onLocationSelected }) => {
     <MapContainer
       center={position || DEFAULT_POSITION}
       zoom={13}
-      style={{ height: "400px", width: "100%" }}
+      className={styles}
     >
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

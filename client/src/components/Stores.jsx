@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import LocationSelectorMap from "../components/StoreLocation/LocationSelector";
 
 const ViewStore = () => {
   const [stores, setStores] = useState([]);
@@ -30,38 +31,30 @@ const ViewStore = () => {
 
   return (
     <div className="h-full w-full">
-      {loading ? (
-        <div>Loading...</div>
-      ) : (
-        <div className="flex flex-col w-full h-full">
+      {loading && <div>Loading...</div>}{" "}
+      {!loading && (
+        <div className="flex flex-col">
           <p className="text-2xl text-light-gray py-2 border-b border-light-gray font-bold">
-            View Store
+            Stores
           </p>
           {stores && stores.length > 0 && (
-            <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-5 sm:mt-8 sm:pt-8 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+            <div className="grid grid-cols-4 gap-4 py-4 overflow-y-scroll">
               {stores?.map((store) => (
-                <article
+                <div
                   key={store.id}
-                  className="border-double border-slate-200 rounded-lg border-2 flex max-w-xl flex-col items-start justify-between px-2"
+                  className="bg-mid-gray p-2 rounded-md border border-dark-gray shadow-sm shadow-dark-gray text-light-gray flex flex-col gap-1"
                 >
-                  <div className="group relative">
-                    <h3 className="mt-3 text-lg font-semibold leading-6 text-white group-hover:text-gray-600">
-                      <a href={store.name}>
-                        <span className="absolute inset-0" />
-                        {store.name}
-                      </a>
-                    </h3>
+                  <p className="text-lg font-semibold">{store.name}</p>
+                  <p className="text-md">Address: {store.address}</p>
+                  <p className="text-md">Contact: {store.contactNumber}</p>
+                  <div className="w-full aspect-square">
+                    <LocationSelectorMap
+                      onLocationSelected={() => {}}
+                      DEFAULT_POSITION={store.location}
+                      styles={"w-full aspect-square"}
+                    />
                   </div>
-                  <div className="relative mt-8 flex items-center gap-x-4">
-                    {/* <img src={store.author.imageUrl} alt="" className="h-10 w-10 rounded-full bg-gray-50" /> */}
-                    <div className="text-sm leading-6">
-                      <p className="mt-3 line-clamp-3 text-sm leading-6 text-white-600">
-                        {store.address}
-                      </p>
-                      <p className="text-gray-600">id: {store._id}</p>
-                    </div>
-                  </div>
-                </article>
+                </div>
               ))}
             </div>
           )}

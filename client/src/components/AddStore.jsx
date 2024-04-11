@@ -6,10 +6,9 @@ import LocationSelectorMap from "./StoreLocation/LocationSelector";
 const AddStore = () => {
   const { user, setUser } = useUser((state) => state);
   const [name, setName] = useState("");
-  const [location, setLocation] = useState("");
+  const [address, setAddress] = useState("");
   const [contactNumber, setContactNumber] = useState("");
-  // const [coord, setCoord] = useState({ });
-  let coord = {};
+  const [coord, setCoord] = useState([]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,39 +20,31 @@ const AddStore = () => {
         {
           method: "POST",
           headers: {
-            authorization: "Bearer " + token,
+            authorization: `Bearer ${token}`,
             "Content-type": "application/json",
           },
           body: JSON.stringify({
             name,
-            location,
-            coord,
+            address,
+            location: coord,
             contactNumber,
           }),
         }
       );
-      console.log(
-        JSON.stringify({
-          name,
-          location,
-          coord,
-          contactNumber,
-        }),
-        "body"
-      );
+
       const data = await response.json();
+
       console.log(data);
       if (!data) {
         return window.alert("Internal server error, unable to add store");
       }
 
       if (data.status === "success") {
-        return window.alert("Store Added Successfully!");
+        window.alert("Store Added Successfully!");
+        setName("");
+        setAddress("");
+        setContactNumber("");
       }
-
-      setName("");
-      setLocation("");
-      setContactNumber("");
     } catch (error) {
       console.log(error);
     }
@@ -61,19 +52,7 @@ const AddStore = () => {
 
   const handleLocationSelected = async (latlng) => {
     console.log(latlng); // { lat: 51.505, lng: -0.09 }
-    setLocation(`lat:${latlng.lat}; long:${latlng.lng}`);
-    // setCoord(latlng);
-    coord = latlng;
-    // Send the latlng to the backend
-    // const response = await fetch('/api/location', {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify(latlng),
-    // });
-    // const data = await response.json();
-    // console.log(data); // Response from your ba
+    setCoord([latlng.lat, latlng.lng]);
   };
 
   return (
@@ -96,8 +75,8 @@ const AddStore = () => {
           <input
             type="text"
             placeholder="Store Address"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
             className="bg-light-gray text-soft-black focus:ring-0 focus:outline-0 px-2 py-1 rounded-sm placeholder:text-mid-gray placeholder:text-sm"
           />
           <input
@@ -117,7 +96,11 @@ const AddStore = () => {
         </form>
         <div className="w-full py-4">
           <p className="text-light-gray">Select Store location</p>
-          <LocationSelectorMap onLocationSelected={handleLocationSelected} />
+          <LocationSelectorMap
+            onLocationSelected={handleLocationSelected}
+            DEFAULT_POSITION={[29.854263, 77.888]}
+            styles={"w-full h-[400px]"}
+          />
         </div>
       </div>
     </div>
