@@ -8,19 +8,19 @@ const { restrictTo } = require("../Controller/authController");
 router.post(
   "/createInventory",
   protect,
-  restrictTo("Store Manager"),
+  restrictTo("CEO", "Store Manager"),
   inventoryController.addInventory
 );
 router.get(
   "/getInventories",
   protect,
-  restrictTo("User"),
+  restrictTo("CEO", "Store Manager"),
   inventoryController.getAllInventories
 );
 router.post(
   "/updateInventory/:id",
   protect,
-  restrictTo("Store Manager"),
+  restrictTo("CEO", "Store Manager"),
   inventoryController.updateInventory
 );
 
