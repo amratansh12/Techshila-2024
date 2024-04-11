@@ -30,7 +30,7 @@ function App() {
     }
   }, []);
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-screen hide-scrollbar">
       <Navbar />
       <Routes>
         <Route path="/login" element={<Login />} />

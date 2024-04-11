@@ -20,7 +20,6 @@ const ViewStore = () => {
           }
         ).then((response) => response.json());
         setStores(response.data.stores);
-        console.log(response.data.stores);
         setLoading(false);
       } catch (error) {
         console.error(error);
@@ -30,15 +29,15 @@ const ViewStore = () => {
   }, []);
 
   return (
-    <div className="h-full w-full">
+    <div className="w-full h-full">
       {loading && <div>Loading...</div>}{" "}
       {!loading && (
-        <div className="flex flex-col">
+        <div className="flex flex-col h-full">
           <p className="text-2xl text-light-gray py-2 border-b border-light-gray font-bold">
             Stores
           </p>
           {stores && stores.length > 0 && (
-            <div className="grid grid-cols-4 gap-4 py-4 overflow-y-scroll">
+            <div className="grid grid-cols-4 gap-4 py-4 overflow-y-scroll hide-scrollbar">
               {stores?.map((store) => (
                 <div
                   key={store.id}
@@ -47,8 +46,19 @@ const ViewStore = () => {
                   <p className="text-lg font-semibold">{store.name}</p>
                   <p className="text-md">Address: {store.address}</p>
                   <p className="text-md">Contact: {store.contactNumber}</p>
+                  {store.workers.length > 0 ? (
+                    <div className="flex flex-wrap gap-1 text-sm text-light-gray">
+                      <span className="font-bold">WorkerIds:</span>
+                      {store.workers.map((worker) => (
+                        <span className="text-white">{worker}</span>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="text-light-gray">
+                      No workers in this store
+                    </div>
+                  )}
                   <div className="w-full aspect-square">
-                    {console.log(store.location)}
                     <LocationSelector
                       onLocationSelected={() => {}}
                       DEFAULT_POSITION={store.location}
