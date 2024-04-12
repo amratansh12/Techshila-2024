@@ -20,17 +20,24 @@ export const useCart = create((set, get) => ({
         set({ cart: updatedCart });
     },
     removeAll: () => set({ cart: [] }),
+    totalPrice: () => {
+        const { cart } = get();
+        if(cart.length){
+            return cart.map(item => item.price * item.count).reduce((a, b) => a + b)
+        }    
+        return 0;
+    }
 }))
 
 function updateCart(product, cart) {
     const cartItem = { ...product, count: 1 } ;
 
-    const productOnCart = cart.map(item => item.id).includes(product.id);
+    const productOnCart = cart.map(item => item._id).includes(product._id);
     
     if (!productOnCart) cart.push(cartItem)
     else {
         return cart.map(item => {
-            if (item.id === product.id)
+            if (item._id === product._id)
                 return { ...item, count: item.count + 1 } ;
             return item
         })        

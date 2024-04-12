@@ -215,6 +215,7 @@ const Home = () => {
             {filteredInventory.length > 0 &&
               filteredInventory.map((item) => (
                 <div className="bg-soft-black rounded-lg p-2 shadow shadow-mid-gray">
+                  {console.log(item)}
                   <img
                     src={
                       item.image

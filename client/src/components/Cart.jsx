@@ -1,5 +1,4 @@
 import {
-  Breadcrumb,
   Button,
   Col,
   Layout,
@@ -9,14 +8,17 @@ import {
   Table,
 } from "antd";
 import { Content } from "antd/es/layout/layout";
-import { CreditCard, Delete, DeleteIcon, Trash, User } from "lucide-react";
+import { CreditCard, Trash, User } from "lucide-react";
 import { useCart } from "../store/cart";
+import { useEffect } from "react";
 
-const Cart = () => {
+const Cart = ({remove, removeAll}) => {
+  const {totalPrice} = useCart();
 
   const {count} = useCart(); 
-  console.log(useCart().cart);
-
+  // console.log(useCart().cart);
+  // const {removeAll} = useCart();
+  // const {remove} = useCart();
   const columns = [
     {
       title: "Name",
@@ -50,6 +52,7 @@ const Cart = () => {
       render: (text, record) => (
         <Space size="middle">
           <Button
+            onClick={() => remove(record.id)}
             icon={<Trash />}
             type="primary"
             shape="round"
@@ -60,6 +63,8 @@ const Cart = () => {
       ),
     }
   ];
+
+  console.log(totalPrice());
 
   const total = [0];
 
@@ -172,6 +177,7 @@ const Cart = () => {
                   display: "flex",
                   justifyContent: "center",
                 }}
+                onClick={() => removeAll()}
               >
                 Empty Cart
               </Button>
@@ -185,9 +191,7 @@ const Cart = () => {
             <Col>
               <Statistic
                 title="Total (tax incl)."
-                value={`₹ ${Math.round(
-                  total.reduce((total, num) => total + num)
-                ).toFixed(2)}`}
+                value={`₹  ${totalPrice()}`}
                 precision={2}
               />
               <Button

@@ -16,6 +16,8 @@ const Navbar = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
 
   const { count } = useCart();
+  const {remove} = useCart();
+  const {removeAll} = useCart();
 
   useEffect(() => {
     setIsProfileOpen(false);
@@ -45,7 +47,7 @@ const Navbar = () => {
                 <Popover
                   placement="bottom"
                   title={"Shopping cart"}
-                  content={<Cart />}
+                  content={<Cart remove={remove} removeAll={removeAll} />}
                 >
                   <Badge count={count()}>
                     <ShoppingCart
