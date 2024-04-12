@@ -15,6 +15,7 @@ const Navbar = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
 
   useEffect(() => {
+    setIsProfileOpen(false);
     if (location.pathname.includes(`/u/${user.name}`)) {
       setIsProfileOpen(true);
     }
