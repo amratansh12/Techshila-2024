@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import LocationSelector from "./StoreLocation/StoreLocation";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const ViewStore = () => {
+  const navigate = useNavigate();
   const [stores, setStores] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -37,7 +39,7 @@ const ViewStore = () => {
             Stores
           </p>
           {stores && stores.length > 0 && (
-            <div className="grid grid-cols-4 gap-4 py-4 overflow-y-scroll hide-scrollbar">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 py-4 overflow-y-scroll hide-scrollbar">
               {stores?.map((store) => (
                 <div
                   key={store.id}
@@ -58,13 +60,16 @@ const ViewStore = () => {
                       No workers in this store
                     </div>
                   )}
-                  <div className="w-full aspect-square">
+                  <div className="w-full">
                     <LocationSelector
                       onLocationSelected={() => {}}
                       DEFAULT_POSITION={store.location}
-                      styles={"w-full aspect-square"}
+                      styles={"w-full aspect-video"}
                     />
                   </div>
+                  <button className="bg-soft-black hover:bg-soft-black/60 px-2 py-1 rounded-md text-light-gray font-bold" onClick={() => navigate(`/u/${store.name}/deep/${store._id}`)}>
+                    See Inventories
+                  </button>
                 </div>
               ))}
             </div>

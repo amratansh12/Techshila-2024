@@ -17,6 +17,24 @@ exports.getAllInventories = async (req, res) => {
   }
 };
 
+exports.getInventoriesByStoreId = async (req, res) => {
+  try {
+    const storeId = req.params.storeId;
+    const inventories = await Inventory.find({ store_id: storeId });
+    res.status(200).json({
+      status: "success",
+      data: {
+        inventories,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "fail",
+      message: err,
+    });
+  }
+};
+
 exports.addInventory = async (req, res) => {
   try {
     const newInventory = await Inventory.create(req.body);

@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAddItemModal } from "../store/toggle-modal";
 
-const Inventory = () => {
-  const { toggleIsAddItemOpen } = useAddItemModal((state) => state);
+const InventoryByStore = ({storeId, storeName}) => {
   const [inventory, setInventory] = useState([]);
 
   useEffect(() => {
@@ -10,7 +9,7 @@ const Inventory = () => {
       try {
         const token = localStorage.getItem("token");
         const response = await fetch(
-          "http://localhost:8000/api/v1/inventory/getInventories",
+          `http://localhost:8000/api/v1/inventory/inventories/${storeId}`,
           {
             method: "GET",
             headers: {
@@ -37,13 +36,7 @@ const Inventory = () => {
   return (
     <div className="w-full h-full flex flex-col">
       <div className="py-2 border-b border-light-gray font-bold flex items-center justify-between">
-        <span className="text-2xl text-light-gray">Inventory</span>
-        <button
-          onClick={toggleIsAddItemOpen}
-          className="bg-soft-black hover:bg-soft-black/60 px-2 py-1 rounded-md text-light-gray font-bold"
-        >
-          Add Item
-        </button>
+        <span className="text-2xl text-light-gray">Store / {storeName} Inventories</span>
       </div>
       {!inventory.length > 0 && (
         <div className="w-full flex-1 text-lg flex justify-center items-center text-light-gray">
@@ -81,10 +74,6 @@ const Inventory = () => {
                 <span className="text-light-gray font-bold">{item.price}</span>
                 <span className="text-light-gray font-bold">{item.unit}</span>
               </div>
-              <div className="flex gap-1 items-center">
-                <span className="font-bold text-cyan-600">StoreId:</span>
-                <span className="text-light-gray">{item.store_id}</span>
-              </div>
             </div>
           ))}
         </div>
@@ -93,4 +82,4 @@ const Inventory = () => {
   );
 };
 
-export default Inventory;
+export default InventoryByStore;

@@ -28,8 +28,8 @@ const Login = () => {
         return window.alert("Unable to login");
       }
 
-      if (!data.message === "Login Successful") {
-        return window.alert("Invalid credentials");
+      if (!(data.message === "Login Successful")) {
+        return window.alert(data.message);
       }
 
       localStorage.setItem("token", data.token);
