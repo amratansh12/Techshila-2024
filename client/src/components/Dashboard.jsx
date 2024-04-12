@@ -26,10 +26,13 @@ const Dashboard = () => {
           <span className="font-bold mr-2 text-cyan-600">Email:</span>
           <span>{email}</span>
         </p>
-        <p className="text-light-gray my-3 text-xl">
+        {
+          role !== "User" ? ( <p className="text-light-gray my-3 text-xl">
           <span className="font-bold mr-2 text-cyan-600">Role:</span>
           <span>{role}</span>
-        </p>
+        </p>): (null)
+        }
+       
         <p className="text-light-gray my-3 text-xl">
           <span className="font-bold mr-2 text-cyan-600">Contact Number:</span>
           <span>{contactNumber}</span>
