@@ -40,7 +40,7 @@ const Navbar = () => {
       {localStorage.getItem("token") &&
         localStorage.getItem("token") !== null && (
           <div className="flex gap-4 items-center justify-center">
-            {!isProfileOpen && user.role === "User" ? (
+            {!isProfileOpen ? (
               <>
                 <Popover
                   placement="bottom"
