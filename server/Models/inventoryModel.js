@@ -18,6 +18,9 @@ const inventorySchema = new mongoose.Schema({
     type: String,
     required: [true, "Manufacturer is required"],
   },
+  image: {
+    type: String,
+  },
   unit: {
     type: String,
   },
