@@ -5,14 +5,17 @@ import logo from "../images/health.svg";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Home, ShoppingCart, User } from "lucide-react";
 import { useUser } from "../store/user-info";
-import { Popover } from "antd";
+import { Popover, Badge } from "antd";
 import Cart from "./Cart";
+import { useCart } from "../store/cart";
 
 const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { user } = useUser((state) => state);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+
+  const { count } = useCart();
 
   useEffect(() => {
     setIsProfileOpen(false);
@@ -44,10 +47,12 @@ const Navbar = () => {
                   title={"Shopping cart"}
                   content={<Cart />}
                 >
-                  <ShoppingCart
-                    size={20}
-                    className="cursor-pointer text-light-gray"
-                  />
+                  <Badge count={count()}>
+                    <ShoppingCart
+                      size={20}
+                      className="cursor-pointer text-light-gray"
+                    />
+                  </Badge>
                 </Popover>
                 {/* <input
                   type="text"
