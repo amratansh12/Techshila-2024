@@ -13,12 +13,7 @@ router.post(
   storeController.addStore
 );
 //integrated to the frontend
-router.get(
-  "/getStores",
-  protect,
-  restrictTo("CEO", "Store Manager"),
-  storeController.getAllStores
-);
+router.get("/getStores", protect, storeController.getAllStores);
 //integrated to the frontend
 router.post(
   "/updateStore/:id",
