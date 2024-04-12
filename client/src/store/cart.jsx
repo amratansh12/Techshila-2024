@@ -30,7 +30,7 @@ export const useCart = create((set, get) => ({
 }))
 
 function updateCart(product, cart) {
-    const cartItem = { ...product, count: 1 } ;
+  const cartItem = { ...product, count: 1 };
 
     const productOnCart = cart.map(item => item._id).includes(product._id);
     
@@ -47,11 +47,12 @@ function updateCart(product, cart) {
 }
 
 function removeCart(idProduct, cart) {
-    return cart.map(item => {
-        if (item.id === idProduct)
-            return { ...item, count: item.count - 1 }
-        return item;
-    }).filter(item => {
-        return item.count;
+  return cart
+    .map((item) => {
+      if (item.id === idProduct) return { ...item, count: item.count - 1 };
+      return item;
+    })
+    .filter((item) => {
+      return item.count;
     });
 }

@@ -61,7 +61,7 @@ const Cart = ({remove, removeAll}) => {
           </Button>
         </Space>
       ),
-    }
+    },
   ];
 
   console.log(totalPrice());
@@ -186,7 +186,11 @@ const Cart = ({remove, removeAll}) => {
           <span className="pb-4">
             Total Items <strong>({count()})</strong>
           </span>
-          <Table columns={columns} dataSource={useCart().cart} pagination={false} />
+          <Table
+            columns={columns}
+            dataSource={useCart().cart}
+            pagination={false}
+          />
           <Row justify="end">
             <Col>
               <Statistic

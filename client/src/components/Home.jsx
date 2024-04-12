@@ -14,7 +14,7 @@ const Home = () => {
   const [inventory, setInventory] = useState([]);
   const [filteredInventory, setFilteredInventory] = useState([]);
 
-  const {add} = useCart();
+  const { add } = useCart();
 
   useEffect(() => {
     if (
@@ -74,7 +74,6 @@ const Home = () => {
       item.name.toLowerCase().includes(e.target.value.toLowerCase())
     );
     setFilteredInventory(newInv);
-    console.log(filteredInventory);
   };
 
   return (
@@ -86,15 +85,27 @@ const Home = () => {
           <Carousel className="rounded-lg" autoplay>
             <div>
               {/* <h3 style={contentStyle}>Welcome to MedFlow</h3> */}
-              <img src= {welcome} alt="Welcome to MedFlow" style={contentStyle} />
+              <img
+                src={welcome}
+                alt="Welcome to MedFlow"
+                style={contentStyle}
+              />
             </div>
             <div>
               {/* <h3 style={contentStyle}>MedFlow makes your orders seamless</h3> */}
-              <img src= {welcome2} alt="MedFlow makes your orders seamless" style={contentStyle} />
+              <img
+                src={welcome2}
+                alt="MedFlow makes your orders seamless"
+                style={contentStyle}
+              />
             </div>
             <div>
               {/* <h3 style={contentStyle}>Order your next medicines in seconds</h3> */}
-              <img src= {welcome3} alt="Unleash the power of Medflow" style={contentStyle} />
+              <img
+                src={welcome3}
+                alt="Unleash the power of Medflow"
+                style={contentStyle}
+              />
             </div>
           </Carousel>
           <div className="flex w-full items-center justify-end my-2">
@@ -164,7 +175,10 @@ const Home = () => {
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
             {!(filteredInventory.length > 0) &&
               inventory.map((item) => (
-                <div className="bg-soft-black rounded-lg p-2 shadow shadow-mid-gray">
+                <div
+                  key={item._id}
+                  className="bg-soft-black rounded-lg p-2 shadow shadow-mid-gray"
+                >
                   <img
                     src={
                       item.image
@@ -207,15 +221,20 @@ const Home = () => {
                       {item.unit}
                     </span>
                   </div>
-                  <button onClick={() => add(item)} className="my-1 bg-light-gray text-soft-black hover:bg-light-gray/70 px-2 py-1 w-full rounded-md">
+                  <button
+                    onClick={() => add(item)}
+                    className="my-1 bg-light-gray text-soft-black hover:bg-light-gray/70 px-2 py-1 w-full rounded-md"
+                  >
                     Add to cart
                   </button>
                 </div>
               ))}
             {filteredInventory.length > 0 &&
               filteredInventory.map((item) => (
-                <div className="bg-soft-black rounded-lg p-2 shadow shadow-mid-gray">
-                  {console.log(item)}
+                <div
+                  key={item._id}
+                  className="bg-soft-black rounded-lg p-2 shadow shadow-mid-gray"
+                >
                   <img
                     src={
                       item.image
@@ -258,7 +277,10 @@ const Home = () => {
                       {item.unit}
                     </span>
                   </div>
-                  <button onClick={() => add(item)} className="my-1 bg-light-gray text-soft-black hover:bg-light-gray/70 px-2 py-1 w-full rounded-md">
+                  <button
+                    onClick={() => add(item)}
+                    className="my-1 bg-light-gray text-soft-black hover:bg-light-gray/70 px-2 py-1 w-full rounded-md"
+                  >
                     Add to cart
                   </button>
                 </div>
