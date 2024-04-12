@@ -4,6 +4,9 @@ import StoreManager from "./StoreManager";
 import CEO from "./CEO";
 import { Button, Card, Carousel, Col, Row } from "antd";
 import Meta from "antd/es/card/Meta";
+import welcome from "../images/welcome.jpg";
+import welcome2 from "../images/welcome2.jpg";
+import welcome3 from "../images/welcome3.jpg";
 
 const Home = () => {
   const [userRole, setUserRole] = useState("");
@@ -57,6 +60,7 @@ const Home = () => {
     lineHeight: "200px",
     textAlign: "center",
     background: "#121212",
+    width: "100%",
   };
 
   const handleSearch = (e) => {
@@ -77,16 +81,16 @@ const Home = () => {
         <div className="bg-dark-gray p-6 aspect-square border-t border-mid-gray w-full flex flex-col gap-5">
           <Carousel className="rounded-lg" autoplay>
             <div>
-              <h3 style={contentStyle}>Welcome to MedFlow</h3>
+              {/* <h3 style={contentStyle}>Welcome to MedFlow</h3> */}
+              <img src= {welcome} alt="Welcome to MedFlow" style={contentStyle} />
             </div>
             <div>
-              <h3 style={contentStyle}>MedFlow makes your orders seamless</h3>
+              {/* <h3 style={contentStyle}>MedFlow makes your orders seamless</h3> */}
+              <img src= {welcome2} alt="MedFlow makes your orders seamless" style={contentStyle} />
             </div>
             <div>
-              <h3 style={contentStyle}>Order your next medicines in seconds</h3>
-            </div>
-            <div>
-              <h3 style={contentStyle}>Unleash the power of MedFlow</h3>
+              {/* <h3 style={contentStyle}>Order your next medicines in seconds</h3> */}
+              <img src= {welcome3} alt="Unleash the power of Medflow" style={contentStyle} />
             </div>
           </Carousel>
           <div className="flex w-full items-center justify-end my-2">
