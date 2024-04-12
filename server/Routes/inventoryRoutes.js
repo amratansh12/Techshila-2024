@@ -15,7 +15,6 @@ router.post(
 router.get(
   "/getInventories",
   protect,
-  restrictTo("CEO", "Store Manager"),
   inventoryController.getAllInventories
 );
 router.post(

@@ -3,8 +3,10 @@ import React, { useEffect, useState } from "react";
 import logo from "../images/health.svg";
 
 import { useNavigate, useLocation } from "react-router-dom";
-import { Home, User } from "lucide-react";
+import { Home, ShoppingCart, User } from "lucide-react";
 import { useUser } from "../store/user-info";
+import { Popover } from "antd";
+import Cart from "./Cart";
 
 const Navbar = () => {
   const location = useLocation();
@@ -35,15 +37,21 @@ const Navbar = () => {
         localStorage.getItem("token") !== null && (
           <div className="flex gap-4 items-center justify-center">
             {!isProfileOpen ? (
-              <div
-                onClick={() => navigate(`/u/${user.name}`)}
-                className="flex gap-1 hover:bg-dark-gray p-2 rounded-full cursor-pointer"
-              >
-                <User className="h-5 w-5 text-light-gray" />
-                <p className="hidden md:block text-sm text-light-gray">
-                  Profile
-                </p>
-              </div>
+              <>
+                <Popover placement="bottom" title={"Shopping cart"} content={<Cart />}>
+                  <ShoppingCart size={36} className="cursor-pointer text-light-gray" />
+                </Popover>
+                <input type="text" placeholder="Search" className="flex gap-1 w-full rounded-full py-1 px-2 hover:bg-dark" />
+                <div
+                  onClick={() => navigate(`/u/${user.name}`)}
+                  className="flex gap-1 hover:bg-dark-gray p-2 rounded-full cursor-pointer"
+                >
+                  <User className="h-5 w-5 text-light-gray" />
+                  <p className="hidden md:block text-sm text-light-gray">
+                    Profile
+                  </p>
+                </div>
+              </>
             ) : (
               <div
                 onClick={() => {
