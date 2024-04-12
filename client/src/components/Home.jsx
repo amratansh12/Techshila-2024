@@ -7,11 +7,15 @@ import Meta from "antd/es/card/Meta";
 import welcome from "../images/welcome.jpg";
 import welcome2 from "../images/welcome2.jpg";
 import welcome3 from "../images/welcome3.jpg";
+import { useCart } from "../store/cart";
 
 const Home = () => {
   const [userRole, setUserRole] = useState("");
   const [inventory, setInventory] = useState([]);
   const [filteredInventory, setFilteredInventory] = useState([]);
+
+  const {add} = useCart();
+
   useEffect(() => {
     if (
       localStorage.getItem("token") &&
@@ -203,7 +207,7 @@ const Home = () => {
                       {item.unit}
                     </span>
                   </div>
-                  <button className="my-1 bg-light-gray text-soft-black hover:bg-light-gray/70 px-2 py-1 w-full rounded-md">
+                  <button onClick={() => add(item)} className="my-1 bg-light-gray text-soft-black hover:bg-light-gray/70 px-2 py-1 w-full rounded-md">
                     Add to cart
                   </button>
                 </div>
@@ -253,7 +257,7 @@ const Home = () => {
                       {item.unit}
                     </span>
                   </div>
-                  <button className="my-1 bg-light-gray text-soft-black hover:bg-light-gray/70 px-2 py-1 w-full rounded-md">
+                  <button onClick={() => add(item)} className="my-1 bg-light-gray text-soft-black hover:bg-light-gray/70 px-2 py-1 w-full rounded-md">
                     Add to cart
                   </button>
                 </div>

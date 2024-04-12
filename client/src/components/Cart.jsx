@@ -10,25 +10,55 @@ import {
 } from "antd";
 import { Content } from "antd/es/layout/layout";
 import { CreditCard, Delete, DeleteIcon, Trash, User } from "lucide-react";
+import { useCart } from "../store/cart";
 
 const Cart = () => {
+
+  const {count} = useCart(); 
+  console.log(useCart().cart);
+
   const columns = [
     {
       title: "Name",
-      dataIndex: "itemName",
+      dataIndex: "name",
       key: "itemName",
     },
 
     {
       title: "Price",
       key: "itemPrice",
-      dataIndex: "itemPrice",
+      dataIndex: "price",
       render: (text, record) => (
         <Space size="middle">
           <p>{text}</p>
         </Space>
       ),
     },
+    {
+      title: "Quantity",
+      key: "itemQuantity",
+      dataIndex: "count",
+      render: (text, record) => (
+        <Space size="middle">
+          <p>{text}</p>
+        </Space>
+      ),
+    },
+    {
+      title: "Actions",
+      key: "actions",
+      render: (text, record) => (
+        <Space size="middle">
+          <Button
+            icon={<Trash />}
+            type="primary"
+            shape="round"
+            danger
+          >
+          </Button>
+        </Space>
+      ),
+    }
   ];
 
   const total = [0];
@@ -148,9 +178,9 @@ const Cart = () => {
             </Col>
           </Row>
           <span className="pb-4">
-            Total Items <strong>({2})</strong>
+            Total Items <strong>({count()})</strong>
           </span>
-          <Table columns={columns} dataSource={""} pagination={false} />
+          <Table columns={columns} dataSource={useCart().cart} pagination={false} />
           <Row justify="end">
             <Col>
               <Statistic
