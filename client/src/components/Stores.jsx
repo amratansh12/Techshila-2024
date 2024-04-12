@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import LocationSelector from "./StoreLocation/StoreLocation";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const ViewStore = () => {
+  const navigate = useNavigate();
   const [stores, setStores] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -65,6 +67,9 @@ const ViewStore = () => {
                       styles={"w-full aspect-video"}
                     />
                   </div>
+                  <button className="bg-soft-black hover:bg-soft-black/60 px-2 py-1 rounded-md text-light-gray font-bold" onClick={() => navigate(`/u/${store.name}/deep/${store._id}`)}>
+                    See Inventories
+                  </button>
                 </div>
               ))}
             </div>

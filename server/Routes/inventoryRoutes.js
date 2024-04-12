@@ -25,4 +25,11 @@ router.post(
   inventoryController.updateInventory
 );
 
+router.get(
+  "/inventories/:storeId",
+  protect,
+  restrictTo("CEO", "Store Manager"),
+  inventoryController.getInventoriesByStoreId
+);
+
 module.exports = router;

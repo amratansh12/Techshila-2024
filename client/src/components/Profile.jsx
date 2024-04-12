@@ -23,6 +23,7 @@ import NearestStores from "./NearestStores";
 import UpdateProfile from "./UpdateProfile";
 import AddStore from "./AddStore";
 import ViewStore from "./Stores";
+import InventoryByStore from "./inventoryByStore";
 
 const sidebarOptions = [
   {
@@ -61,6 +62,10 @@ const Profile = () => {
   const [options, setOptions] = useState([]);
   const { user, setUser } = useUser((state) => state);
   const [component, setComponent] = useState("");
+  let str = location.pathname.split("/")[2];
+  if(str !== undefined){
+    str = str.replace(/%20/g, " ");
+  }
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -101,6 +106,8 @@ const Profile = () => {
           return <ViewStore />;
         case "settings":
           return <UpdateProfile />;
+          case "deep":
+            return <InventoryByStore storeId={location.pathname.split("/")[4]} storeName = {str} />;
         default:
           return;
       }
