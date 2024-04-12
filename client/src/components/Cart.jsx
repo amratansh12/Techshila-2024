@@ -13,9 +13,8 @@ import { CreditCard, Delete, DeleteIcon, Trash, User } from "lucide-react";
 import { useCart } from "../store/cart";
 
 const Cart = () => {
-
-  const {count} = useCart(); 
-  console.log(useCart().cart);
+  const { cart, count } = useCart();
+  console.log(cart);
 
   const columns = [
     {
@@ -49,16 +48,10 @@ const Cart = () => {
       key: "actions",
       render: (text, record) => (
         <Space size="middle">
-          <Button
-            icon={<Trash />}
-            type="primary"
-            shape="round"
-            danger
-          >
-          </Button>
+          <Button icon={<Trash />} type="primary" shape="round" danger></Button>
         </Space>
       ),
-    }
+    },
   ];
 
   const total = [0];
@@ -180,7 +173,11 @@ const Cart = () => {
           <span className="pb-4">
             Total Items <strong>({count()})</strong>
           </span>
-          <Table columns={columns} dataSource={useCart().cart} pagination={false} />
+          <Table
+            columns={columns}
+            dataSource={useCart().cart}
+            pagination={false}
+          />
           <Row justify="end">
             <Col>
               <Statistic
