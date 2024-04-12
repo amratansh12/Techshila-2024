@@ -49,11 +49,14 @@ const ViewStore = () => {
                   <p className="text-md">Address: {store.address}</p>
                   <p className="text-md">Contact: {store.contactNumber}</p>
                   {store.workers.length > 0 ? (
-                    <div className="flex flex-wrap gap-1 text-sm text-light-gray">
-                      <span className="font-bold">WorkerIds:</span>
-                      {store.workers.map((worker) => (
-                        <span className="text-white">{worker}</span>
-                      ))}
+                    // <div className="flex flex-wrap gap-1 text-sm text-light-gray">
+                    //   <span className="font-bold">WorkerIds:</span>
+                    //   {store.workers.map((worker) => (
+                    //     <span className="text-white">{worker}</span>
+                    //   ))}
+                    // </div>
+                    <div className="text-light-gray">
+                      {store.workers.length} workers in this store
                     </div>
                   ) : (
                     <div className="text-light-gray">
