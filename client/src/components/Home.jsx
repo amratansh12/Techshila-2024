@@ -83,9 +83,9 @@ const Home = () => {
             </div>
           </Carousel>
           <br />
-          <Row gutter={16}>
+          <Row gutter={[16, 16]}>
             {inventory.map((item) => (
-              <Col span={8}>
+              <Col span={6}>
                 <Card key={item._id} bordered={false} hoverable
                   cover={<img alt="example" style={{ height: '240px', objectFit: 'fill', maxWidth: '100%' }} src="https://www.shutterstock.com/image-photo/pharmaceuticals-antibiotics-pills-medicine-colorful-260nw-1061962874.jpg" />}
                 >
