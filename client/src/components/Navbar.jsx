@@ -39,10 +39,21 @@ const Navbar = () => {
           <div className="flex gap-4 items-center justify-center">
             {!isProfileOpen ? (
               <>
-                <Popover placement="bottom" title={"Shopping cart"} content={<Cart />}>
-                  <ShoppingCart size={36} className="cursor-pointer text-light-gray" />
+                <Popover
+                  placement="bottom"
+                  title={"Shopping cart"}
+                  content={<Cart />}
+                >
+                  <ShoppingCart
+                    size={20}
+                    className="cursor-pointer text-light-gray"
+                  />
                 </Popover>
-                <input type="text" placeholder="Search" className="flex gap-1 w-full rounded-full py-1 px-2 hover:bg-dark" />
+                {/* <input
+                  type="text"
+                  placeholder="Search"
+                  className="w-full bg-light-gray rounded-md py-1 px-2 hover:bg-dark focus:outline-none focus:ring-0 placeholder:text-dark-gray"
+                /> */}
                 <div
                   onClick={() => navigate(`/u/${user.name}`)}
                   className="flex gap-1 hover:bg-dark-gray p-2 rounded-full cursor-pointer"

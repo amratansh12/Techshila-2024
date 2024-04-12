@@ -53,7 +53,10 @@ const Inventory = () => {
       {inventory.length > 0 && (
         <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-4 py-4 overflow-y-scroll hide-scrollbar">
           {inventory.map((item) => (
-            <div className="bg-mid-gray text-white p-2 rounded-md border border-dark-gray shadow-sm shadow-dark-gray">
+            <div
+              key={item.id}
+              className="bg-mid-gray text-white p-2 rounded-md border border-dark-gray shadow-sm shadow-dark-gray"
+            >
               <div className="flex gap-2 items-center">
                 <span className="font-bold text-cyan-600">Name:</span>
                 <span className="text-light-gray">{item.name}</span>

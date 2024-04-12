@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAddItemModal } from "../store/toggle-modal";
 
-const InventoryByStore = ({storeId, storeName}) => {
+const InventoryByStore = ({ storeId, storeName }) => {
   const [inventory, setInventory] = useState([]);
 
   useEffect(() => {
@@ -33,10 +33,13 @@ const InventoryByStore = ({storeId, storeName}) => {
 
     getAllInventories();
   }, [inventory]);
+
   return (
     <div className="w-full h-full flex flex-col">
       <div className="py-2 border-b border-light-gray font-bold flex items-center justify-between">
-        <span className="text-2xl text-light-gray">Store / {storeName} Inventories</span>
+        <span className="text-2xl text-light-gray">
+          Store / {storeName} Inventories
+        </span>
       </div>
       {!inventory.length > 0 && (
         <div className="w-full flex-1 text-lg flex justify-center items-center text-light-gray">

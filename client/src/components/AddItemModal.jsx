@@ -14,6 +14,7 @@ const AddItemModal = () => {
   const [stores, setStores] = useState([]);
   const [selectedStore, setSelectedStore] = useState("");
   const [qty, setQty] = useState(1);
+  const [img, setImg] = useState("");
 
   const getAllStores = async () => {
     try {
@@ -38,13 +39,12 @@ const AddItemModal = () => {
     } catch (err) {
       console.log(err);
     }
-  }
+  };
   // getAllStores();
   useEffect(() => {
     getAllStores();
     console.log(stores);
   }, []);
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -66,8 +66,9 @@ const AddItemModal = () => {
             manufacturer,
             category,
             unit,
-            quantity:qty,
+            quantity: qty,
             store_id: selectedStore,
+            image: img,
           }),
         }
       );
@@ -123,11 +124,13 @@ const AddItemModal = () => {
           <select
             value={type}
             onChange={(e) => setType(e.target.value)}
-            className="w-full bg-light-gray text-soft-black focus:ring-0 focus:outline-0 px-2 py-1 rounded-sm placeholder:text-mid-gray placeholder:text-sm"
+            className="w-full bg-light-gray text-soft-black focus:ring-0 focus:outline-0 p-1 rounded-sm placeholder:text-mid-gray placeholder:text-sm"
           >
-            <option value="syrup" defaultChecked>Syrup</option>
-            <option value="tablet" defaultChecked>Tablet</option>
-            <option value="capsule" defaultChecked>Capsule</option>
+            <option value="syrup" defaultChecked>
+              Syrup
+            </option>
+            <option value="tablet">Tablet</option>
+            <option value="capsule">Capsule</option>
           </select>
           <input
             type="text"
@@ -136,13 +139,13 @@ const AddItemModal = () => {
             placeholder="Category"
             className="bg-light-gray text-soft-black focus:ring-0 focus:outline-0 px-2 py-1 rounded-sm placeholder:text-mid-gray placeholder:text-sm"
           />
-            <input
-              type="number"
-              value={qty}
-              onChange={(e) => setQty(e.target.value)}
-              placeholder="Quantity"
-              className="bg-light-gray text-soft-black focus:ring-0 focus:outline-0 px-2 py-1 rounded-sm placeholder:text-mid-gray placeholder:text-sm"
-            />
+          <input
+            type="number"
+            value={qty}
+            onChange={(e) => setQty(e.target.value)}
+            placeholder="Quantity"
+            className="bg-light-gray text-soft-black focus:ring-0 focus:outline-0 px-2 py-1 rounded-sm placeholder:text-mid-gray placeholder:text-sm"
+          />
           <input
             type="number"
             value={price}
@@ -164,6 +167,13 @@ const AddItemModal = () => {
             placeholder="Manufacturer"
             className="bg-light-gray text-soft-black focus:ring-0 focus:outline-0 px-2 py-1 rounded-sm placeholder:text-mid-gray placeholder:text-sm"
           />
+          <input
+            type="text"
+            value={img}
+            onChange={(e) => setImg(e.target.value)}
+            placeholder="Image URL"
+            className="bg-light-gray text-soft-black focus:ring-0 focus:outline-0 px-2 py-1 rounded-sm placeholder:text-mid-gray placeholder:text-sm"
+          />
           <select
             type="text"
             value={selectedStore}
@@ -171,12 +181,18 @@ const AddItemModal = () => {
             placeholder="Store"
             className="w-full bg-light-gray text-soft-black focus:ring-0 focus:outline-0 px-2 py-1 rounded-sm placeholder:text-mid-gray placeholder:text-sm"
           >
-              <option value="" disabled selected>Select a store</option>
-            {stores && stores?.map((store) => (
-              <option key={store._id} value={store._id}>{store.name}</option>
-            ))}
+            <option value="" disabled selected>
+              Select a store
+            </option>
+            {stores &&
+              stores?.map((store) => (
+                <option key={store._id} value={store._id}>
+                  {store.name}
+                </option>
+              ))}
           </select>
-          <button className="bg-soft-black hover:bg-soft-black/60 px-2 py-1 rounded-md text-light-gray w-full"
+          <button
+            className="bg-soft-black hover:bg-soft-black/60 px-2 py-1 rounded-md text-light-gray w-full"
             onClick={handleSubmit}
           >
             Add

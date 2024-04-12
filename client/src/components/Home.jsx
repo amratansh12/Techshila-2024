@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import StoreManager from "./StoreManager";
 import CEO from "./CEO";
-import { Button, Card, Carousel, Col, Row } from 'antd';
+import { Button, Card, Carousel, Col, Row } from "antd";
 import Meta from "antd/es/card/Meta";
 
 const Home = () => {
   const [userRole, setUserRole] = useState("");
   const [inventory, setInventory] = useState([]);
+  const [filteredInventory, setFilteredInventory] = useState([]);
   useEffect(() => {
     if (
       localStorage.getItem("token") &&
@@ -50,12 +51,22 @@ const Home = () => {
   }, []);
 
   const contentStyle = {
-    height: '300px',
-    color: '#fff',
-    alignitems: 'center',
-    lineHeight: '200px',
-    textAlign: 'center',
-    background: '#364d79',
+    height: "300px",
+    color: "#A9A9A9",
+    alignitems: "center",
+    lineHeight: "200px",
+    textAlign: "center",
+    background: "#121212",
+  };
+
+  const handleSearch = (e) => {
+    if (e.target.value === "") setFilteredInventory(inventory);
+
+    const newInv = inventory.filter((item) =>
+      item.name.toLowerCase().includes(e.target.value.toLowerCase())
+    );
+    setFilteredInventory(newInv);
+    console.log(filteredInventory);
   };
 
   return (
@@ -63,42 +74,75 @@ const Home = () => {
       {userRole === "CEO" && <CEO />}
       {userRole === "Store Manager" && <StoreManager />}
       {userRole === "User" && (
-        <div className="bg-soft-black p-6 rounded-md aspect-square border border-mid-gray w-full">
-          <Carousel autoplay>
+        <div className="bg-dark-gray p-6 aspect-square border-t border-mid-gray w-full flex flex-col gap-5">
+          <Carousel className="rounded-lg" autoplay>
             <div>
-              <h3 style={contentStyle}>
-                <div>
-                  <h1>WELCOME TO MEDFLOW</h1>
-                </div>
-              </h3>
+              <h3 style={contentStyle}>Welcome to MedFlow</h3>
             </div>
             <div>
-              <h3 style={contentStyle}>2</h3>
+              <h3 style={contentStyle}>MedFlow makes your orders seamless</h3>
             </div>
             <div>
-              <h3 style={contentStyle}>3</h3>
+              <h3 style={contentStyle}>Order your next medicines in seconds</h3>
             </div>
             <div>
-              <h3 style={contentStyle}>4</h3>
+              <h3 style={contentStyle}>Unleash the power of MedFlow</h3>
             </div>
           </Carousel>
-          <br />
-          <Row gutter={[16, 16]}>
+          <div className="flex w-full items-center justify-end my-2">
+            <input
+              type="text"
+              onChange={handleSearch}
+              placeholder="Search Meds"
+              className="bg-light-gray text-soft-black focus:ring-0 focus:outline-0 px-2 py-1 rounded-sm placeholder:text-mid-gray placeholder:text-sm"
+            />
+          </div>
+          {/* <Row gutter={[16, 16]}>
             {inventory.map((item) => (
               <Col span={6}>
-                <Card key={item._id} bordered={false} hoverable
-                  cover={<img alt="example" style={{ height: '240px', objectFit: 'fill', maxWidth: '100%' }} src="https://www.shutterstock.com/image-photo/pharmaceuticals-antibiotics-pills-medicine-colorful-260nw-1061962874.jpg" />}
+                <Card
+                  key={item._id}
+                  bordered={false}
+                  hoverable
+                  cover={
+                    <img
+                      alt="example"
+                      style={{
+                        height: "240px",
+                        objectFit: "fill",
+                        maxWidth: "100%",
+                      }}
+                      src={
+                        item.image
+                          ? item.image
+                          : "https://www.shutterstock.com/image-photo/pharmaceuticals-antibiotics-pills-medicine-colorful-260nw-1061962874.jpg"
+                      }
+                    />
+                  }
                 >
-                  <Meta title={
-                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <div>{item.name}</div>
-                      <div>Price: <b>{item.price}{" "}{item.unit}</b></div>
-                    </div>
-                  } description={item.description} />
-                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <div>
-                      Type: {item.type}
-                    </div>
+                  <Meta
+                    title={
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <div>{item.name}</div>
+                        <div>
+                          Price:{" "}
+                          <b>
+                            {item.price} {item.unit}
+                          </b>
+                        </div>
+                      </div>
+                    }
+                    description={item.description}
+                  />
+                  <div
+                    style={{ display: "flex", justifyContent: "space-between" }}
+                  >
+                    <div>Type: {item.type}</div>
                     <div>
                       Manufacturer: <b> {item.manufacturer}</b>
                     </div>
@@ -108,7 +152,109 @@ const Home = () => {
                 </Card>
               </Col>
             ))}
-          </Row>
+          </Row> */}
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {!(filteredInventory.length > 0) &&
+              inventory.map((item) => (
+                <div className="bg-soft-black rounded-lg p-2 shadow shadow-mid-gray">
+                  <img
+                    src={
+                      item.image
+                        ? item.image
+                        : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3MF01bNjQKXPkUrupPmdbXWAkpskK0BsrDCt8QZFMIg&s"
+                    }
+                    alt="imageLogo"
+                    className="w-full aspect-video object-contain border-b border-mid-gray mb-2"
+                  />
+                  <div className="flex gap-2 items-center">
+                    <span className="font-bold text-cyan-600">Name:</span>
+                    <span className="text-light-gray">{item.name}</span>
+                  </div>
+                  <div className="flex gap-1 items-center">
+                    <span className="font-bold text-cyan-600">Desc:</span>
+                    <span className="text-light-gray">{item.description}</span>
+                  </div>
+                  <div className="flex gap-1 items-center">
+                    <span className="font-bold text-cyan-600">Type:</span>
+                    <span className="text-light-gray">{item.type}</span>
+                  </div>
+                  <div className="flex gap-1 items-center">
+                    <span className="font-bold text-cyan-600">
+                      Manufacturer:
+                    </span>
+                    <span className="text-light-gray">{item.manufacturer}</span>
+                  </div>
+                  <div className="flex gap-1 items-center">
+                    <span className="font-bold text-cyan-600">Quantity:</span>
+                    <span className="text-light-gray font-bold">
+                      {item.quantity} remaining in stocks
+                    </span>
+                  </div>
+                  <div className="flex gap-1 items-center">
+                    <span className="font-bold text-cyan-600">Price:</span>
+                    <span className="text-light-gray font-bold">
+                      {item.price}
+                    </span>
+                    <span className="text-light-gray font-bold">
+                      {item.unit}
+                    </span>
+                  </div>
+                  <button className="my-1 bg-light-gray text-soft-black hover:bg-light-gray/70 px-2 py-1 w-full rounded-md">
+                    Add to cart
+                  </button>
+                </div>
+              ))}
+            {filteredInventory.length > 0 &&
+              filteredInventory.map((item) => (
+                <div className="bg-soft-black rounded-lg p-2 shadow shadow-mid-gray">
+                  <img
+                    src={
+                      item.image
+                        ? item.image
+                        : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3MF01bNjQKXPkUrupPmdbXWAkpskK0BsrDCt8QZFMIg&s"
+                    }
+                    alt="imageLogo"
+                    className="w-full aspect-video object-contain border-b border-mid-gray mb-2"
+                  />
+                  <div className="flex gap-2 items-center">
+                    <span className="font-bold text-cyan-600">Name:</span>
+                    <span className="text-light-gray">{item.name}</span>
+                  </div>
+                  <div className="flex gap-1 items-center">
+                    <span className="font-bold text-cyan-600">Desc:</span>
+                    <span className="text-light-gray">{item.description}</span>
+                  </div>
+                  <div className="flex gap-1 items-center">
+                    <span className="font-bold text-cyan-600">Type:</span>
+                    <span className="text-light-gray">{item.type}</span>
+                  </div>
+                  <div className="flex gap-1 items-center">
+                    <span className="font-bold text-cyan-600">
+                      Manufacturer:
+                    </span>
+                    <span className="text-light-gray">{item.manufacturer}</span>
+                  </div>
+                  <div className="flex gap-1 items-center">
+                    <span className="font-bold text-cyan-600">Quantity:</span>
+                    <span className="text-light-gray font-bold">
+                      {item.quantity} remaining in stocks
+                    </span>
+                  </div>
+                  <div className="flex gap-1 items-center">
+                    <span className="font-bold text-cyan-600">Price:</span>
+                    <span className="text-light-gray font-bold">
+                      {item.price}
+                    </span>
+                    <span className="text-light-gray font-bold">
+                      {item.unit}
+                    </span>
+                  </div>
+                  <button className="my-1 bg-light-gray text-soft-black hover:bg-light-gray/70 px-2 py-1 w-full rounded-md">
+                    Add to cart
+                  </button>
+                </div>
+              ))}
+          </div>
         </div>
       )}
     </div>
