@@ -19,7 +19,6 @@ import Workers from "./Workers";
 import Inventory from "./Inventory";
 import Orders from "./Orders";
 import OrderStatus from "./OrderStatus";
-import NearestStores from "./NearestStores";
 import UpdateProfile from "./UpdateProfile";
 import AddStore from "./AddStore";
 import ViewStore from "./Stores";
@@ -63,7 +62,7 @@ const Profile = () => {
   const { user, setUser } = useUser((state) => state);
   const [component, setComponent] = useState("");
   let str = location.pathname.split("/")[2];
-  if(str !== undefined){
+  if (str !== undefined) {
     str = str.replace(/%20/g, " ");
   }
 
@@ -106,8 +105,13 @@ const Profile = () => {
           return <ViewStore />;
         case "settings":
           return <UpdateProfile />;
-          case "deep":
-            return <InventoryByStore storeId={location.pathname.split("/")[4]} storeName = {str} />;
+        case "deep":
+          return (
+            <InventoryByStore
+              storeId={location.pathname.split("/")[4]}
+              storeName={str}
+            />
+          );
         default:
           return;
       }
@@ -122,7 +126,7 @@ const Profile = () => {
         case "Order%20Status":
           return <OrderStatus />;
         case "Nearest%20stores":
-          return <NearestStores />;
+          return <ViewStore />;
         case "settings":
           return <UpdateProfile />;
         default:
