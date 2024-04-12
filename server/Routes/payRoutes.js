@@ -11,18 +11,28 @@ router.post("/orders", async (req, res) => {
             key_id: process.env.RAZORPAY_ID,
             key_secret: process.env.RAZORPAY_SECRET,
         });
-        
+
         const options = {
             amount: 50000, // amount in smallest currency unit
             currency: "INR",
             receipt: "receipt_order_74394",
         };
-        
+
         const order = await instance.orders.create(options);
         console.log(order);
 
-        if (!order) return res.status(500).send("Some error occured");
-        res.json(order);
+        try {
+            const newOrder = await OrderModel.create(order);
+            if (!newOrder) {
+                return res.status(401).json({ error: "Unable to process your order" });
+            }
+            return res.status(200).json(newOrder);
+        } catch (error) {
+            return res.status(500).json({ error: "Internal server error" });
+        }
+
+        // if (!order) return res.status(500).send("Some error occured");
+        // res.json(order);
     } catch (error) {
         res.status(500).send(error);
     }

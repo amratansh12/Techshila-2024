@@ -144,12 +144,12 @@ const Cart = ({remove, removeAll}) => {
         alert(successmsg.msg);
       },
       prefill: {
-        name: "Soumya Dey",
-        email: "SoumyaDey@example.com",
+        name: "Ayush",
+        email: "ayush@example.com",
         contact: "9999999999",
       },
       notes: {
-        address: "Soumya Dey Corporate Office",
+        address: "Medflow Corporate Office",
       },
       theme: {
         color: "#61dafb",
